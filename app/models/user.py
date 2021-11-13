@@ -10,7 +10,11 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
+    profile_photo = db.Column(db.String(),nullable=True)
+    about = db.Column(db.String(), nullable=True)
 
+    events = db.relationship( "Event", back_populates = "host",  cascade="all, delete, delete-orphan")
+    rsvps = db.relationship( "Rsvp", back_populates = "user",  cascade="all, delete, delete-orphan")
     @property
     def password(self):
         return self.hashed_password
