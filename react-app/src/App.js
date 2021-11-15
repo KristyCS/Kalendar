@@ -12,7 +12,7 @@ import { authenticate } from './store/session';
 function App() {
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
-
+  const [rating, setRating] = useState(0);
   useEffect(() => {
     (async() => {
       await dispatch(authenticate());
@@ -42,6 +42,21 @@ function App() {
         </ProtectedRoute>
         <ProtectedRoute path='/' exact={true} >
           <h1>My Home Page</h1>
+
+          <div className="star-rating">
+                {[...Array(5)].map((star, rate) => {
+                  rate += 1;
+                  return (
+                    <button
+                      type="button"
+                      key={rate}
+                      onClick={() => setRating(rate)}
+                    >
+                      <p> % </p>
+                    </button>
+                  );
+                })}
+              </div>
         </ProtectedRoute>
       </Switch>
     </BrowserRouter>

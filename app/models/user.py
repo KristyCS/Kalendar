@@ -10,7 +10,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
-    profile_photo = db.Column(db.String(),nullable=True)
+    profile_photo = db.Column(db.String(),default="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png", nullable=False)
     about = db.Column(db.String(), nullable=True)
 
     events = db.relationship( "Event", back_populates = "host",  cascade="all, delete, delete-orphan")
