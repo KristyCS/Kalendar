@@ -15,6 +15,7 @@ class User(db.Model, UserMixin):
 
     events = db.relationship( "Event", back_populates = "host",  cascade="all, delete, delete-orphan")
     rsvps = db.relationship( "Rsvp", back_populates = "user",  cascade="all, delete, delete-orphan")
+    photos = db.relationship( "Photo", back_populates = "user", cascade ="all, delete, delete-orphan")
     @property
     def password(self):
         return self.hashed_password

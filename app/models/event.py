@@ -1,5 +1,5 @@
 from .db import db
-import datetime
+from datetime import datetime
 
 class Event(db.Model):
     __tablename__ = 'events'
@@ -15,15 +15,14 @@ class Event(db.Model):
     lng = db.Column(db.Numeric(scale=7),nullable=False)
     start_at = db.Column(db.DateTime, nullable=False)
     end_at = db.Column(db.DateTime, nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow,onupdate=datetime.now())
     
     
     host = db.relationship( "User", back_populates = "events")
     rsvps = db.relationship("Rsvp", back_populates="event", cascade = 'all, delete , delete-orphan')
-    # comments = db.relationship("Comment", back_populates="post", cascade = 'all, delete')
-    # likes = db.relationship("Like", back_populates="post", cascade = 'all, delete')
-
+    photos = db.relationship("Photo", back_populates="event", cascade = 'all, delete, delete-orphan')
+  
     def to_dict(self):
         return {
             'id': self.id,

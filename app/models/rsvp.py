@@ -1,6 +1,5 @@
 from .db import db
-import datetime
-
+from datetime import datetime
 class Rsvp(db.Model):
     __tablename__ = 'rsvps'
 
@@ -9,8 +8,8 @@ class Rsvp(db.Model):
     event_id = db.Column(db.Integer, db.ForeignKey("events.id"), nullable=False)
     status = db.Column(db.String(10), nullable = False)
     comment = db.Column(db.String(2200), nullable=True)
-    created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.now())
 
 
     user = db.relationship("User", back_populates="rsvps")
