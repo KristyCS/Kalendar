@@ -1,0 +1,19 @@
+.home-page-container {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: 1fr ;
+  height: 100%;
+  
+}
+
+.left-nav-container {
+  height: 100%;
+  padding: 5ex;
+  border-right: solid rgb(219, 220, 224) 1px;
+}
+
+.main-container {
+  height: 100%;
+}
+
+

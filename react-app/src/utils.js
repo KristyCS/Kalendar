@@ -6,13 +6,13 @@ const firstDateCurrentPeriod = firstDateInMonth.subtract(
   "day"
 );
               
-const monthFrame = new Array(5);
+const MonthFrame = new Array(5);
 let runner = firstDateCurrentPeriod;
 for (let i = 0; i < 5; i++) {
-    monthFrame[i] = []
+    MonthFrame[i] = []
   for (let j = 0; j < 7; j++) {
-      monthFrame[i].push(runner);
+      MonthFrame[i].push(runner);
       runner = runner.add(1, "day");
   }
 }
-export default monthFrame;
+export default MonthFrame;

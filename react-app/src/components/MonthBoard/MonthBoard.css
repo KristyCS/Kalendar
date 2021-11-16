@@ -1,0 +1,26 @@
+
+.large-week-head {
+  display: grid;
+  background-color: white;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(1, 30px);
+  gap: 0px;
+}
+.large-week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(1, 120px);
+  gap: 0px;
+}
+.large-week-head > div {
+  border: solid 0.5px rgb(219, 220, 224);
+}
+.large-week > div{
+    border: solid 0.5px rgb(219, 220, 224);
+}
+.large-date {
+    text-align:center;
+}
+.large-head-content{
+    text-align: center;
+}
