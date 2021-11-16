@@ -13,12 +13,13 @@ def users():
 
 
 @user_routes.route('/<int:id>')
-# @login_required
+@login_required
 def user(id):
     user = User.query.get(id)
     return user.to_dict()
 
 @user_routes.route('/<int:id>/events')
+@login_required
 def getAllEventsByUserId(id):
     events = Event.query.filter(Event.host_id==id).all()
-    return {event.id: event.theme for event in events}
+    return {event.id: event.to_dict() for event in events}

@@ -26,26 +26,25 @@ class Event(db.Model):
     def to_dict(self):
         return {
             'id': self.id,
-            'host': self.user.to_simple_dict(),
+            'host': self.host.to_simple_dict(),
             'description': self.description,
             'theme': self.theme,
             'poster': self.poster,
             'city': self.city,
             'state': self.state,
-            'lat': self.lat,
-            'lng':self.lng,
+            'lat': float(self.lat),
+            'lng':float(self.lng),
             'start_at': self.start_at,
             'end_at': self.end_at,
             "photos": [photo.to_simple_dict() for photo in self.photos],
-            "rsvps": [rsvp.to_simple_dict() for rsvp in self.rsvps],  
+            "rsvps": [rsvp.to_dict() for rsvp in self.rsvps],  
         }
 
-    # def to_simple_dict(self):
-    #     return {
-    #         'id': self.id,
-    #         'description': self.description,
-    #         'likes': len(self.likes)
-    #     }
+    def to_simple_dict(self):
+        return {
+            'id': self.id,
+            'host': self.host.to_simple_dict(),
+        }
 
     def update(self, description=None):
         self.description = description if description else self.description

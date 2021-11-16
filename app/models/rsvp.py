@@ -19,7 +19,7 @@ class Rsvp(db.Model):
         return {
             'id': self.id,
             'user': self.user.to_simple_dict(),
-            'event': self.event.to_dict(),
+            'event': self.event.to_simple_dict(),
             'status': self.status,
             'comment': self.comment,
         }

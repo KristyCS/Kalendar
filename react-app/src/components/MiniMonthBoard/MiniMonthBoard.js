@@ -3,7 +3,6 @@ import "./MiniMonthBoard.css"
 const MiniMondivBoard = ({current_date}) => {
   const monthFrame = MonthFrame;
   const mark_date = current_date.date()
-  console.log(mark_date,"%%%%%%%%%")
   return (
     <div>
       <div className = "board">

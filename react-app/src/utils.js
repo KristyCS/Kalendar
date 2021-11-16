@@ -6,18 +6,21 @@ const firstDateCurrentPeriod = firstDateInMonth.subtract(
   "day"
 );
 
-// export const todayIdx = (today)=>{
-    
-// }
-              
 const MonthFrame = new Array(5);
 let runner = firstDateCurrentPeriod;
 for (let i = 0; i < 5; i++) {
-    MonthFrame[i] = []
+  MonthFrame[i] = [];
   for (let j = 0; j < 7; j++) {
-      MonthFrame[i].push(runner);
-      runner = runner.add(1, "day");
+    MonthFrame[i].push(runner);
+    runner = runner.add(1, "day");
   }
 }
-export default MonthFrame;
 
+//
+export const getEventsInThisMonth = (events, monthIdx) => {
+  if (events) {
+    return Object.values(events).filter((event) => dayjs(event.start_at).month() === monthIdx);
+  }
+};
+
+export default MonthFrame;
