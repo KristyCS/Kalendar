@@ -2,7 +2,8 @@ import MonthFrame from "../../utils";
 import "./MiniMonthBoard.css"
 const MiniMondivBoard = ({current_date}) => {
   const monthFrame = MonthFrame;
-
+  const mark_date = current_date.date()
+  console.log(mark_date,"%%%%%%%%%")
   return (
     <div>
       <div className = "board">
@@ -19,7 +20,7 @@ const MiniMondivBoard = ({current_date}) => {
         {monthFrame.map((week, idx) => (
           <div key={`week.mondiv()${idx}`} className="week">
             {week.map((day, idx) => (
-              <div key={`day.day()${idx}`} className="date">{day.date()}</div>
+              <div key={`day.day()${idx}`} className={mark_date===day.date()? "mark-date":"date"}>{day.date()}</div>
             ))}
           </div>
         ))}

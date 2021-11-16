@@ -5,6 +5,10 @@ const firstDateCurrentPeriod = firstDateInMonth.subtract(
   firstDateInMonth.day(),
   "day"
 );
+
+// export const todayIdx = (today)=>{
+    
+// }
               
 const MonthFrame = new Array(5);
 let runner = firstDateCurrentPeriod;
@@ -16,3 +20,4 @@ for (let i = 0; i < 5; i++) {
   }
 }
 export default MonthFrame;
+

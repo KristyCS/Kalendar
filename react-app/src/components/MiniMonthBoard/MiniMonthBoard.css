@@ -19,4 +19,8 @@
   text-align: center;
 }
 
-
+.mark-date{
+  background-color: rgb(56,113,224);
+  color:white;
+  border-radius: 50%;
+}
