@@ -3,11 +3,12 @@ from app.models import db, Event
 from app.forms import EventForm
 from flask_login import login_required
 from ..util import validation_errors_to_error_messages
+from datetime import datetime
 
 event_routes = Blueprint("events",__name__)
 
 
-@event_routes.route('/',methods=['POST'])
+@event_routes.route('',methods=['POST'])
 @login_required
 def createEvent():
     form = EventForm();

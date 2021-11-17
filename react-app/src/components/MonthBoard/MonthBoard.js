@@ -48,8 +48,8 @@ const MonthBoard = ({ eventsInThisMonth }) => {
                 <p className="large-date">{day.date()}</p>
                 {eventsObj && day.date() in eventsObj && (
                   <div className="event-lists">
-                    {eventsObj[day.date()].map((event) => (
-                      <div key={event.id}>{event.theme}</div>
+                    {eventsObj[day.date()].map((event,idk) => (
+                      <div key={idk}>{event.theme}</div>
                     ))}
                   </div>
                 )}
