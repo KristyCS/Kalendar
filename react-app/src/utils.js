@@ -1,7 +1,20 @@
-const dayjs = require("dayjs");
+export const dayjs = require("dayjs");
 const isBetween = require("dayjs/plugin/isBetween");
 dayjs.extend(isBetween);
-
+export const monthName = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 export const buildMonthFrame = (date = new Date()) => {
   const firstDateInMonth = dayjs(date).startOf("month");
   const firstDateCurrentPeriod = firstDateInMonth.subtract(
@@ -9,9 +22,9 @@ export const buildMonthFrame = (date = new Date()) => {
     "day"
   );
 
-  const monthFrame = new Array(5);
+  const monthFrame = new Array(6);
   let runner = firstDateCurrentPeriod;
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 6; i++) {
     monthFrame[i] = [];
     for (let j = 0; j < 7; j++) {
       monthFrame[i].push(runner);
@@ -19,16 +32,6 @@ export const buildMonthFrame = (date = new Date()) => {
     }
   }
   return monthFrame;
-};
-
-export const getEventsInThisMonth = (events, monthIdx, yearIdx) => {
-  if (events) {
-    return Object.values(events).filter(
-      (event) =>
-        dayjs(event.start_at).utc().month() === monthIdx &&
-        dayjs(event.start_at).utc().year() === yearIdx
-    );
-  }
 };
 
 export const getEventsInThisPeriod = (events, date) => {

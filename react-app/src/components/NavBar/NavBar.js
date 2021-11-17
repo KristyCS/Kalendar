@@ -5,25 +5,13 @@ import LoginDemouser from "../auth/LoginDemouser";
 import { useSelector } from "react-redux";
 import { useCurrentDateContext } from "../../context/CurrentDate";
 import "./NavBar.css";
+import {monthName} from "../../utils";
 import { ImCircleLeft, ImCircleRight } from "react-icons/im";
 const dayjs = require("dayjs");
 const NavBar = () => {
   const user = useSelector((state) => state.session.user);
   const { currentDate, setCurrentDate } = useCurrentDateContext();
-  const monthName = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
+  
   return (
     <nav>
       <ul className="nav-container">
