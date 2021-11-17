@@ -14,27 +14,13 @@ class Rsvp(db.Model):
 
     user = db.relationship("User", back_populates="rsvps")
     event = db.relationship("Event", back_populates="rsvps")
-    # photos = db.relationship("Photo", back_populates="post", cascade = 'all, delete , delete-orphan')
-    # comment = db.relationship("Comment", back_populates="post", cascade = 'all, delete')
-    # likes = db.relationship("Like", back_populates="post", cascade = 'all, delete')
-
+   
     def to_dict(self):
         return {
             'id': self.id,
             'user': self.user.to_simple_dict(),
-            'description': self.description,
-            "photos": [photo.to_simple_dict() for photo in self.photos],
-            "comments": [comment.to_simple_dict() for comment in self.comments],
-            "likes": [like.to_simple_dict() for like in self.likes]
+            'event': self.event.to_simple_dict(),
+            'status': self.status,
+            'comment': self.comment,
         }
 
-    def to_simple_dict(self):
-        return {
-            'id': self.id,
-            'description': self.description,
-            'likes': len(self.likes)
-        }
-
-    def update(self, description=None):
-        self.description = description if description else self.description
-        return self

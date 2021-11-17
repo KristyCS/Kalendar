@@ -2,20 +2,23 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import "./index.css";
+import {ModalProvider} from "./context/Modal"
 import App from "./App";
 import configureStore from "./store";
-import TodayProvider from "./context/Today";
+import CurrentDateProvider from "./context/CurrentDate";
 import LeftNavigationBarProvider from "./context/LeftNavigationBar";
 const store = configureStore();
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <TodayProvider>
+      <ModalProvider>
+      <CurrentDateProvider>
         <LeftNavigationBarProvider>
           <App />
         </LeftNavigationBarProvider>
-      </TodayProvider>
+      </CurrentDateProvider>
+      </ModalProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")

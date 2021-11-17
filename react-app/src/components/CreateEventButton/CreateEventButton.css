@@ -1,0 +1,10 @@
+.create-event-button{
+    display:flex;
+    flex-direction: row;
+    gap:5px;
+    align-items:center;
+    border-radius: 50px;
+    padding: 15px 20px;
+    border : 1px solid grey;
+    /* box-shadow: 2px 2px 2px 2px red; */
+}

@@ -1,0 +1,19 @@
+.create-event-container {
+  margin-left: 60px;
+  margin-right:20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.theme {
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    border-bottom-style: groove;
+    outline:none;
+    padding:4px;
+    border-bottom: 1px solid rgb(218 220 224); 
+}
+
+.theme:focus{
+    border-bottom: 2px solid rgb(56 113 224); 
+}

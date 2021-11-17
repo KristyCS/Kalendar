@@ -16,3 +16,8 @@ class Photo(db.Model):
     user = db.relationship("User", back_populates = "photos")
     event = db.relationship("Event", back_populates = "photos")
 
+    def to_dict(self):
+        return {
+            'img_url' :self.img_url,
+            'comment': self.comment,
+        }
