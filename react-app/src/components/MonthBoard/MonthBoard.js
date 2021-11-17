@@ -2,27 +2,21 @@ import { buildMonthFrame } from "../../utils";
 import "./MonthBoard.css";
 import { useCurrentDateContext } from "../../context/CurrentDate";
 import { useEffect, useState } from "react";
+import { Modal } from "../../context/Modal";
+import EventDetailPage from "../EventDetailPage/EventDetailPage";
 const dayjs = require("dayjs");
-const MonthBoard = ({ eventsInThisMonth }) => {
+const utc = require("dayjs/plugin/utc");
+const timezone = require("dayjs/plugin/timezone");
+dayjs.extend(utc);
+dayjs.extend(timezone);
+const MonthBoard = ({ eventsInThisPeriod }) => {
   const [monthFrame, setMonthFrame] = useState(buildMonthFrame());
-  const [eventsObj, setEventsObj] = useState();
+  const [event, setEvent] = useState();
+  const [showEventDetailModal, setShowEventDetailModal] = useState(false);
   const { currentDate } = useCurrentDateContext();
-  useEffect(()=>{
-    setMonthFrame(buildMonthFrame(currentDate))
-  },[currentDate])
   useEffect(() => {
-    if (eventsInThisMonth) {
-      const newEventsObj = {};
-      for (const event of eventsInThisMonth) {
-        if (!newEventsObj[`${dayjs(event.start_at).date()}`]) {
-          newEventsObj[`${dayjs(event.start_at).date()}`] = [event];
-        } else {
-          newEventsObj[`${dayjs(event.start_at).date()}`].push(event);
-        }
-      }
-      setEventsObj(newEventsObj);
-    }
-  }, [eventsInThisMonth]);
+    setMonthFrame(buildMonthFrame(currentDate));
+  }, [currentDate]);
 
   return (
     <div>
@@ -36,27 +30,42 @@ const MonthBoard = ({ eventsInThisMonth }) => {
           <div className="large-head-content">Fri</div>
           <div className="large-head-content">Sat</div>
         </div>
-
         {monthFrame.map((week, idx) => (
           <div key={`week.mondiv()${idx}`} className="large-week">
             {week.map((day, idx) => (
               <div
                 key={`day.day()${idx}`}
-                id={day.date()}
+                id={day.month() + "-" + day.date()}
                 className="large-day-content"
               >
                 <p className="large-date">{day.date()}</p>
-                {eventsObj && day.date() in eventsObj && (
-                  <div className="event-lists">
-                    {eventsObj[day.date()].map((event) => (
-                      <div key={event.id}>{event.theme}</div>
-                    ))}
-                  </div>
-                )}
+                {eventsInThisPeriod &&
+                  `${day.month()}-${day.date()}` in eventsInThisPeriod && (
+                    <div className="event-lists">
+                      {eventsInThisPeriod[`${day.month()}-${day.date()}`].map(
+                        (event, idk) => (
+                          <div
+                            key={idk}
+                            onClick={() => {
+                              setEvent(event);
+                              setShowEventDetailModal(true);
+                            }}
+                          >
+                            {event.theme}
+                          </div>
+                        )
+                      )}
+                    </div>
+                  )}
               </div>
             ))}
           </div>
         ))}
+        {showEventDetailModal && (
+          <Modal onClose={() => setShowEventDetailModal(false)}>
+            <EventDetailPage event={event} />
+          </Modal>
+        )}
       </div>
     </div>
   );

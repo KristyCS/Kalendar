@@ -1,14 +1,14 @@
-from re import L
 from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField,DecimalField,DateTimeField
 from wtforms.validators import DataRequired, Length, ValidationError
 from app.models import Event
-
+from datetime import datetime
 
 def timeCheck(form, field):
-    start_at = field.data
-    end_at = form.data["end_at"]
-    if start_at>=end_at :
+
+    start_at_obj = datetime.strptime(field.data, '%m/%d/%y %H:%M:%S')
+    end_at_obj = datetime.strptime(form.data['end_at'], '%m/%d/%y %H:%M:%S') 
+    if start_at_obj > end_at_obj :
         raise ValidationError("Start time must be before end time.")
 
 
@@ -19,7 +19,7 @@ class EventForm(FlaskForm):
     poster = StringField("poster")
     city = StringField("city", validators=[Length(max=50),DataRequired()])
     state = StringField("state", validators=[Length(max=50),DataRequired()])
-    lat = DecimalField("lat", validators=[DataRequired()])
-    lng = DecimalField("lng", validators=[DataRequired()])
-    start_at= DateTimeField("start_at", validators=[DataRequired(),timeCheck])
-    end_at = DateTimeField("end_at",validators=[DataRequired()])
+    lat = DecimalField("lat")
+    lng = DecimalField("lng")
+    start_at= StringField("start_at", validators=[timeCheck, DataRequired()])
+    end_at = StringField("end_at", validators=[DataRequired()])

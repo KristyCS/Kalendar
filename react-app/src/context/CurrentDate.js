@@ -7,7 +7,7 @@ export const useCurrentDateContext = () => useContext(CurrentDateContext);
 
 const CurrentDateProvider = ({ children }) => {
   const [currentDate, setCurrentDate] = useState(dayjs());
-
+  
   return (
     <CurrentDateContext.Provider value={{ currentDate, setCurrentDate }}>
       {children}

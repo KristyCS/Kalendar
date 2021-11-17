@@ -18,7 +18,7 @@ const CreateEventButton = () => {
       </div>
       {showCreateEventModal && (
         <Modal onClose={() => setShowCreateEventModal(false)}>
-          <CreateEventPage />
+          <CreateEventPage setShowCreateEventModal={setShowCreateEventModal}/>
         </Modal>
       )}
     </>
