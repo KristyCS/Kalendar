@@ -1,10 +1,15 @@
-import MonthFrame from "../../utils";
+import { buildMonthFrame } from "../../utils";
 import "./MonthBoard.css";
+import { useCurrentDateContext } from "../../context/CurrentDate";
 import { useEffect, useState } from "react";
 const dayjs = require("dayjs");
 const MonthBoard = ({ eventsInThisMonth }) => {
-  const monthFrame = MonthFrame;
+  const [monthFrame, setMonthFrame] = useState(buildMonthFrame());
   const [eventsObj, setEventsObj] = useState();
+  const { currentDate } = useCurrentDateContext();
+  useEffect(()=>{
+    setMonthFrame(buildMonthFrame(currentDate))
+  },[currentDate])
   useEffect(() => {
     if (eventsInThisMonth) {
       const newEventsObj = {};

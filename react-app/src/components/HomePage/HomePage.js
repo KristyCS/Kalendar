@@ -21,13 +21,13 @@ const HomePage = () => {
 
   useEffect(() => {
     setEventInThisMonth(getEventsInThisMonth(myEvents, currentDate.month()));
-  }, [myEvents]);
+  }, [myEvents,currentDate]);
 
   return (
     <div className="home-page-container">
       <div className="left-nav-container">
         <CreateEventButton />
-        <MiniMonthBoard current_date={currentDate} />
+        <MiniMonthBoard />
       </div>
       <div className="main-container">
         <MonthBoard eventsInThisMonth={eventsInThisMonth}/>
