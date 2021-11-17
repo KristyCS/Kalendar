@@ -15,4 +15,4 @@ jobs:
     - name: Build and push
       run: heroku container:push -a kalendar-aa web
     - name: Release
-      run: heroku container:release -a kalendar-aa we
+      run: heroku container:release -a kalendar-aa web
