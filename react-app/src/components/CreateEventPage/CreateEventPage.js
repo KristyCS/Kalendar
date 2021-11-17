@@ -31,8 +31,6 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
       poster,
       city,
       state,
-      lat: 100.0,
-      lng: 100.0,
       start_at: "".concat(
         dayjs(startDate).format("MM/DD/YY"),
         " ",

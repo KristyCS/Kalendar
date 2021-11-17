@@ -43,21 +43,6 @@ export const createEvent =
         end_at,
       }),
     });
-    console.log(
-      JSON.stringify({
-        host_id,
-        theme,
-        description,
-        poster,
-        city,
-        state,
-        lat,
-        lng,
-        start_at,
-        end_at,
-      }),
-      "^^^^^^^^^"
-    );
     if (response.ok) {
       const event = await response.json();
       dispatch(addEvent(event));
