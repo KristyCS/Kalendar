@@ -3,26 +3,16 @@ import "./MonthBoard.css";
 import { useCurrentDateContext } from "../../context/CurrentDate";
 import { useEffect, useState } from "react";
 const dayjs = require("dayjs");
-const MonthBoard = ({ eventsInThisMonth }) => {
+const utc = require("dayjs/plugin/utc");
+const timezone = require("dayjs/plugin/timezone");
+dayjs.extend(utc);
+dayjs.extend(timezone);
+const MonthBoard = ({ eventsInThisPeriod }) => {
   const [monthFrame, setMonthFrame] = useState(buildMonthFrame());
-  const [eventsObj, setEventsObj] = useState();
   const { currentDate } = useCurrentDateContext();
-  useEffect(()=>{
-    setMonthFrame(buildMonthFrame(currentDate))
-  },[currentDate])
   useEffect(() => {
-    if (eventsInThisMonth) {
-      const newEventsObj = {};
-      for (const event of eventsInThisMonth) {
-        if (!newEventsObj[`${dayjs(event.start_at).date()}`]) {
-          newEventsObj[`${dayjs(event.start_at).date()}`] = [event];
-        } else {
-          newEventsObj[`${dayjs(event.start_at).date()}`].push(event);
-        }
-      }
-      setEventsObj(newEventsObj);
-    }
-  }, [eventsInThisMonth]);
+    setMonthFrame(buildMonthFrame(currentDate));
+  }, [currentDate]);
 
   return (
     <div>
@@ -42,17 +32,20 @@ const MonthBoard = ({ eventsInThisMonth }) => {
             {week.map((day, idx) => (
               <div
                 key={`day.day()${idx}`}
-                id={day.date()}
+                id={day.month() + "-" + day.date()}
                 className="large-day-content"
               >
                 <p className="large-date">{day.date()}</p>
-                {eventsObj && day.date() in eventsObj && (
-                  <div className="event-lists">
-                    {eventsObj[day.date()].map((event,idk) => (
-                      <div key={idk}>{event.theme}</div>
-                    ))}
-                  </div>
-                )}
+                {eventsInThisPeriod &&
+                  `${day.month()}-${day.date()}` in eventsInThisPeriod && (
+                    <div className="event-lists">
+                      {eventsInThisPeriod[`${day.month()}-${day.date()}`].map(
+                        (event, idk) => (
+                          <div key={idk}>{event.theme}</div>
+                        )
+                      )}
+                    </div>
+                  )}
               </div>
             ))}
           </div>

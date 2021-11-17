@@ -18,3 +18,8 @@
 .today:hover{
   background-color: beige;
 }
+
+.month-container, .year-container{
+  display:flex;
+  flex-direction: row;
+}

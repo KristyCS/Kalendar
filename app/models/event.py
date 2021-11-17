@@ -13,8 +13,8 @@ class Event(db.Model):
     state = db.Column(db.String(50), nullable = False)
     lat = db.Column(db.Numeric(scale=7),nullable=False)
     lng = db.Column(db.Numeric(scale=7),nullable=False)
-    start_at = db.Column(db.DateTime, nullable=False)
-    end_at = db.Column(db.DateTime, nullable=False)
+    start_at = db.Column(db.DateTime(timezone=False),nullable=False)
+    end_at = db.Column(db.DateTime(timezone=False),nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow,onupdate=datetime.now())
     
