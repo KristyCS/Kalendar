@@ -28,23 +28,23 @@ const NavBar = () => {
         </div>
         {user && (
           <div className = "date-nav-container">
-            {/* <div className="today" onCdivck={() => setCurrentDate(dayjs())}>
+            <div className="today" onClick={() => setCurrentDate(dayjs())}>
               {" "}
               Today
             </div>
             <div className="month-year-container">
               <MdArrowBackIos
                 className="arrow"
-                onCdivck={() => setCurrentDate(currentDate.subtract(1, "month"))}
+                onClick={() => setCurrentDate(currentDate.subtract(1, "month"))}
               />
               <MdArrowForwardIos
                 className="arrow"
-                onCdivck={() => setCurrentDate(currentDate.add(1, "month"))}
+                onClick={() => setCurrentDate(currentDate.add(1, "month"))}
               />
               <div>
                 {monthName[currentDate.month()]} {currentDate.year()}
               </div>
-            </div> */}
+            </div>
             <div>
               <LogoutButton />
             </div>

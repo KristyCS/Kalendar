@@ -76,7 +76,6 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
             selected={startTime}
             onChange={(value) => {
               setStartTime(value);
-              console.log("!!!");
             }}
           />
         </div>
@@ -122,14 +121,15 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
           />
         </div>
         <div className="poster">
-        <input
-          type="file"
-          onChange={(e) => {
-            setPosterFile(e.target.files);
-          }}
-          accept="image/*"
-          multiple={false}
-        /></div>
+          <input
+            type="file"
+            onChange={(e) => {
+              setPosterFile(e.target.files[0]);
+            }}
+            accept="image/*"
+            multiple={true}
+          />
+        </div>
         <button type="submit">Save</button>
       </form>
     </div>

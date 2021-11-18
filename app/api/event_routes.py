@@ -9,6 +9,17 @@ import requests
 
 event_routes = Blueprint("events",__name__)
 
+# def createImagesByPostId(photos, postId):
+#     if photos:
+#         for photo in photos:
+#             # image.filename = get_unique_filename(image.filename)
+#             photo_url = upload_file_to_s3(photo, 'foodstagramdev')
+#             photo_url = "https://foodstagramdev.s3.amazonaws.com/"+photo.filename
+#             photo = Photo(post_id=postId, photo_url=photo_url)
+#             db.session.add(photo)
+#             db.session.commit()
+
+
 @event_routes.route('/<int:id>',methods=['PUT'])
 @login_required
 def editEvent(id):
@@ -42,6 +53,8 @@ def deleteEvent(id):
 @login_required
 def createEvent():
     form = EventForm()
+    print(request.files,"&&&&&&&&&&&&&&&&&&&&&")
+    print(request.files.getlist('posterFile'),"^^^^^^^^^^^^^^^^^^^^")
     city = form.data["city"]
     state = form.data["state"]
     response = requests.get(
