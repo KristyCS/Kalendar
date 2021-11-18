@@ -43,7 +43,7 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
     if (data) {
       setErrors(data);
     } else {
-      setShowCreateEventModal(false);
+      // setShowCreateEventModal(false);
     }
   };
   return (
