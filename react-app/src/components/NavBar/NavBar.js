@@ -5,68 +5,69 @@ import LoginDemouser from "../auth/LoginDemouser";
 import { useSelector } from "react-redux";
 import { useCurrentDateContext } from "../../context/CurrentDate";
 import "./NavBar.css";
-import {monthName} from "../../utils";
-import { ImCircleLeft, ImCircleRight } from "react-icons/im";
+import { monthName } from "../../utils";
+import { RiCalendarCheckFill } from "react-icons/ri";
+import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
+import { GiHamburgerMenu } from "react-icons/gi";
 const dayjs = require("dayjs");
 const NavBar = () => {
   const user = useSelector((state) => state.session.user);
   const { currentDate, setCurrentDate } = useCurrentDateContext();
-  
+
   return (
     <nav>
-      <ul className="nav-container">
-        <li>
-          <NavLink to="/" exact={true} activeClassName="active">
-            Home
+      <div className="nav-container">
+        <div className="h-container">
+          <GiHamburgerMenu className ="hamber-icon" size={25}/>
+        </div>
+        <div>
+          <RiCalendarCheckFill size={30}/>
+          <NavLink to="/" exact={true} className="Kalendar">
+            Kalendar
           </NavLink>
-        </li>
+        </div>
         {user && (
-          <>
-            <li className="today" onClick={() => setCurrentDate(dayjs())}>
+          <div className = "date-nav-container">
+            {/* <div className="today" onCdivck={() => setCurrentDate(dayjs())}>
               {" "}
               Today
-            </li>
-            <div className="month-container">
-              <ImCircleLeft
-                onClick={() => setCurrentDate(currentDate.subtract(1, "month"))}
-              />
-              <li >{monthName[currentDate.month()]}</li>
-              <ImCircleRight
-                onClick={() => setCurrentDate(currentDate.add(1, "month"))}
-              />
             </div>
-            <div className="year-container">
-              <ImCircleLeft
-                onClick={() => setCurrentDate(currentDate.subtract(1, "year"))}
+            <div className="month-year-container">
+              <MdArrowBackIos
+                className="arrow"
+                onCdivck={() => setCurrentDate(currentDate.subtract(1, "month"))}
               />
-              <li >{currentDate.year()}</li>
-              <ImCircleRight
-                onClick={() => setCurrentDate(currentDate.add(1, "year"))}
+              <MdArrowForwardIos
+                className="arrow"
+                onCdivck={() => setCurrentDate(currentDate.add(1, "month"))}
               />
-            </div>
-            <li>
+              <div>
+                {monthName[currentDate.month()]} {currentDate.year()}
+              </div>
+            </div> */}
+            <div>
               <LogoutButton />
-            </li>
-          </>
+            </div>
+          </div>
         )}
         {!user && (
           <>
-            <li>
+            <div>
               <LoginDemouser />
-            </li>
-            <li>
+            </div>
+            <div>
               <NavLink to="/login" exact={true} activeClassName="active">
                 Login
               </NavLink>
-            </li>
-            <li>
+            </div>
+            <div>
               <NavLink to="/sign-up" exact={true} activeClassName="active">
                 Sign Up
               </NavLink>
-            </li>{" "}
+            </div>{" "}
           </>
         )}
-      </ul>
+      </div>
     </nav>
   );
 };

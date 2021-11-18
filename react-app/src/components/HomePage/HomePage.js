@@ -7,7 +7,7 @@ import { getEventsByUserId } from "../../store/event";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { getEventsInThisPeriod,dayjs } from "../../utils";
-import { FaLongArrowAltLeft, FaLongArrowAltRight } from "react-icons/fa";
+import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
 import {monthName} from "../../utils";
 const HomePage = () => {
   const user = useSelector((state) => state.session.user);
@@ -34,8 +34,8 @@ const HomePage = () => {
             {currentDate.year()}
           </div>
           <div className="mini-board-arrow">
-          <FaLongArrowAltLeft onClick={()=>setCurrentDate(dayjs(currentDate).subtract(1,"month"))}/>
-          <FaLongArrowAltRight onClick={()=>setCurrentDate(dayjs(currentDate).add(1,"month"))}/></div>
+          <MdArrowBackIos onClick={()=>setCurrentDate(dayjs(currentDate).subtract(1,"month"))}/>
+          <MdArrowForwardIos onClick={()=>setCurrentDate(dayjs(currentDate).add(1,"month"))}/></div>
         </div>
         <MiniMonthBoard />
       </div>
