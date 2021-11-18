@@ -12,3 +12,4 @@ class Config:
         'DATABASE_URL').replace('postgres://', 'postgresql://')
     SQLALCHEMY_ECHO = True
     OPEN_CAGE_API_KEY = os.environ.get("OPEN_CAGE_API_KEY")
+    

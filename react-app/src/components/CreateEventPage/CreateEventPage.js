@@ -1,7 +1,7 @@
 import "./CreateEventPage.css";
 import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
-import "react-datetime/css/react-datetime.css";
+// import 'rc-time-picker/assets/index.css';
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { createEvent } from "../../store/event";
@@ -17,7 +17,7 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
   const [theme, setTheme] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
-  const [poster, setPoster] = useState("");
+  const [posterFile, setPosterFile] = useState(null);
   const [description, setDescription] = useState("");
   const { setCurrentDate } = useCurrentDateContext();
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
       host_id: user.id,
       theme,
       description,
-      poster,
+      posterFile,
       city,
       state,
       start_at: "".concat(
@@ -76,7 +76,6 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
             selected={startTime}
             onChange={(value) => {
               setStartTime(value);
-              console.log("!!!");
             }}
           />
         </div>
@@ -119,6 +118,16 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
             placeholder="description"
             row={15}
             column={20}
+          />
+        </div>
+        <div className="poster">
+          <input
+            type="file"
+            onChange={(e) => {
+              setPosterFile(e.target.files[0]);
+            }}
+            accept="image/*"
+            multiple={true}
           />
         </div>
         <button type="submit">Save</button>

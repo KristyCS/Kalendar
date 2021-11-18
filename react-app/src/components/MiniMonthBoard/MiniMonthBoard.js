@@ -4,7 +4,10 @@ import { useState, useEffect } from "react";
 import { useCurrentDateContext } from "../../context/CurrentDate";
 const MiniMondivBoard = () => {
   const [monthFrame, setMonthFrame] = useState(buildMonthFrame());
-  const { currentDate, setCurrentDate } = useCurrentDateContext();
+  const { miniBoardMarker, setMiniBoardMarker,setCurrentDate,currentDate } = useCurrentDateContext();
+  useEffect(() => {
+    setMonthFrame(buildMonthFrame(miniBoardMarker));
+  }, [miniBoardMarker]);
   useEffect(() => {
     setMonthFrame(buildMonthFrame(currentDate));
   }, [currentDate]);
@@ -26,10 +29,13 @@ const MiniMondivBoard = () => {
             {week.map((day, idx) => (
               <div
                 key={`day.day()${idx}`}
-                onClick={() => setCurrentDate(day)}
+                onClick={() => {
+                  setCurrentDate(day);
+                  setMiniBoardMarker(day);
+                }}
                 className={
-                  currentDate.date() === day.date() &&
-                  currentDate.month() === day.month()
+                  miniBoardMarker.date() === day.date() &&
+                  miniBoardMarker.month() === day.month()
                     ? "mark-date"
                     : "date"
                 }
