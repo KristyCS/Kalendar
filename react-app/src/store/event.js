@@ -44,7 +44,8 @@ export const createEvent =
     if (response.ok) {
       const event = await response.json();
       dispatch(addEvent(event));
-      for (const participant in participants) {
+      for (const participant of participants) {
+       
         dispatch(createRsvp({ user_id: participant, event_id: event.id }));
       }
       return null;
