@@ -7,9 +7,9 @@ export const createRsvp =
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        user_id,
+        user_id:parseInt(user_id),
         event_id,
-        status:"no response",
+        status:"no rsp",
       }),
     });
     if (response.ok) {
