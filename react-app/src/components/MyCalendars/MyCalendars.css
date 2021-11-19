@@ -1,0 +1,67 @@
+.my-calendars-head {
+  display: flex;
+  flex-direction: row;
+  padding: 4px;
+  justify-content: flex-start;
+  gap: 30px;
+}
+.check-con {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.check-con label {
+  cursor: pointer;
+  font-size: 20px;
+
+}
+.label-check-box {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.label-check-box:after {
+  content: "\2713";
+  color: white;
+  font-size: 20px;
+  display: none;
+}
+.label-check-box:checked:after {
+  display: block;
+}
+.work {
+    background-color: white;
+    border: 2px solid rgb(123, 134, 198);
+}
+.work:checked {
+    background-color: rgb(123, 134, 198);
+  }
+.family {
+  background-color: white;
+  border: 2px solid rgb(226, 93, 51);
+}
+.family:checked {
+  background-color: rgb(226, 93, 51);
+}
+.other {
+    background-color: white;
+    border: 2px solid rgb(66, 148, 136);
+}
+.other:checked {
+    background-color: rgb(66, 148, 136);
+  }
+  
+
+.my-calendars-head:hover {
+  background-color: rgb(239, 240, 243);
+}
+
+.my-calendars-head:active {
+  background-color: rgb(219, 219, 221);
+}

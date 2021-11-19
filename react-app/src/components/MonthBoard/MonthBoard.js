@@ -3,7 +3,9 @@ import "./MonthBoard.css";
 import { useCurrentDateContext } from "../../context/CurrentDate";
 import { useEffect, useState } from "react";
 import { Modal } from "../../context/Modal";
+import { useEventLabelContext } from "../../context/EventLabel";
 import EventDetailPage from "../EventDetailPage/EventDetailPage";
+import { v4 as uuidv4 } from 'uuid';
 const dayjs = require("dayjs");
 const utc = require("dayjs/plugin/utc");
 const timezone = require("dayjs/plugin/timezone");
@@ -14,10 +16,25 @@ const MonthBoard = ({ eventsInThisPeriod }) => {
   const [event, setEvent] = useState();
   const [showEventDetailModal, setShowEventDetailModal] = useState(false);
   const { currentDate } = useCurrentDateContext();
+  const [labelSet, setLabelSet] = useState(new Set());
+  const {
+    checkFamily,
+    setCheckFamily,
+    checkWork,
+    setCheckWork,
+    checkOther,
+    setCheckOther,
+  } = useEventLabelContext();
   useEffect(() => {
     setMonthFrame(buildMonthFrame(currentDate));
   }, [currentDate]);
-
+  useEffect(() => {
+    const newLabelSet = new Set();
+    checkFamily && newLabelSet.add("family") ;
+    checkWork && newLabelSet.add("work");
+    checkOther && newLabelSet.add("other") ;
+    setLabelSet(newLabelSet);
+  }, [checkFamily, checkWork, checkOther]);
   return (
     <div>
       <div className="large-board">
@@ -31,28 +48,29 @@ const MonthBoard = ({ eventsInThisPeriod }) => {
           <div className="large-head-content">Sat</div>
         </div>
         {monthFrame.map((week, idx) => (
-          <div key={`week.mondiv()${idx}`} className="large-week">
+          <div key={uuidv4()} className="large-week">
             {week.map((day, idx) => (
               <div
-                key={`day.day()${idx}`}
+                key={uuidv4()}
                 id={day.month() + "-" + day.date()}
                 className="large-day-content"
               >
                 <p className="large-date">{day.date()}</p>
-                {eventsInThisPeriod &&
+                {eventsInThisPeriod && 
                   `${day.month()}-${day.date()}` in eventsInThisPeriod && (
                     <div className="event-lists">
                       {eventsInThisPeriod[`${day.month()}-${day.date()}`].map(
-                        (event, idk) => (
-                          <div
-                            key={idk}
+                        (event, idk) => (<div key={uuidv4()}>
+                          {labelSet.has(event.label) && <div
+                            key={uuidv4()}
+                            className={"event-" + event.label}
                             onClick={() => {
                               setEvent(event);
                               setShowEventDetailModal(true);
                             }}
                           >
                             {event.theme}
-                          </div>
+                          </div>}</div>
                         )
                       )}
                     </div>

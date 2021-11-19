@@ -4,13 +4,13 @@ from faker import Faker
 def seed_Rsvp():
     fake = Faker()
     rsvp1 = Rsvp(
-        user_id = 5, event_id = 2, status="confirmed", comment= fake.text(100), 
+        user_id = 5, event_id = 2, status="yes", comment= fake.text(100), 
      )
     rsvp2 = Rsvp(
-        user_id = 1, event_id = 3, status="confirmed", comment= fake.text(100), 
+        user_id = 1, event_id = 3, status="no rsp", comment= fake.text(100), 
     )
     rsvp3 = Rsvp(
-        user_id = 5, event_id = 1, status="confirmed", comment= fake.text(100), 
+        user_id = 5, event_id = 1, status="yes", comment= fake.text(100), 
     )
     rsvp4 = Rsvp(
         user_id = 5, event_id = 2, status="maybe", comment= fake.text(100), 
@@ -19,25 +19,25 @@ def seed_Rsvp():
         user_id = 2, event_id = 1, status="no", comment= fake.text(100), 
      )
     rsvp6 = Rsvp(
-        user_id = 1, event_id = 2, status="confirmed", comment= fake.text(100), 
+        user_id = 1, event_id = 2, status="yes", comment= fake.text(100), 
      )
     rsvp7 = Rsvp(
         user_id = 5, event_id = 3, status="no", comment= fake.text(100), 
      )
     rsvp8 = Rsvp(
-        user_id = 5, event_id = 4, status="confirmed", comment= fake.text(100), 
+        user_id = 5, event_id = 4, status="yes", comment= fake.text(100), 
      )
     rsvp9 = Rsvp(
         user_id = 5, event_id = 5, status="maybe", comment= fake.text(100), 
      ) 
     rsvp10 = Rsvp(
-        user_id = 4, event_id = 2, status="confirmed", comment= fake.text(100), 
+        user_id = 4, event_id = 2, status="yes", comment= fake.text(100), 
      )
     rsvp11 = Rsvp(
         user_id = 4, event_id = 3, status="maybe", comment= fake.text(100), 
      ) 
     rsvp12 = Rsvp(
-        user_id = 4, event_id = 4, status="confirmed", comment= fake.text(100), 
+        user_id = 4, event_id = 4, status="yes", comment= fake.text(100), 
      )
     
     db.session.add(rsvp1)

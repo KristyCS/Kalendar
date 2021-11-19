@@ -1,8 +1,9 @@
-const SET_EVENTS = "SET_EVENTS";
+import { createRsvp } from "./rsvp";
+const SET_MYEVENTS = "SET_MYEVENTS";
 const ADD_EVENT = "ADD_EVENT";
-
-const setEvents = (events) => ({
-  type: SET_EVENTS,
+const SET_ALLEVENTS = "SET_ALLEVENTS";
+const setMyEvents = (events) => ({
+  type: SET_MYEVENTS,
   events,
 });
 
@@ -11,41 +12,46 @@ const addEvent = (event) => ({
   event,
 });
 
+const setAllEvents = (events) => ({
+  type: SET_ALLEVENTS,
+  events,
+});
+
 export const createEvent =
   ({
     host_id,
     theme,
     description,
-    poster,
+    posterFile,
     city,
+    label,
+    participants,
     state,
-    lat,
-    lng,
     start_at,
     end_at,
   }) =>
   async (dispatch) => {
+    const formData = new FormData();
+    formData.append("host_id", host_id);
+    formData.append("theme", theme);
+    formData.append("description", description);
+    formData.append("city", city);
+    formData.append("state", state);
+    formData.append("start_at", start_at);
+    formData.append("end_at", end_at);
+    formData.append("posterFile", posterFile);
+    formData.append("label", label);
+
     const response = await fetch("/api/events", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        host_id,
-        theme,
-        description,
-        poster,
-        city,
-        state,
-        lat,
-        lng,
-        start_at,
-        end_at,
-      }),
+      body: formData,
     });
     if (response.ok) {
       const event = await response.json();
       dispatch(addEvent(event));
+      for (const participant of participants) {
+        dispatch(createRsvp({ user_id: participant, event_id: event.id }));
+      }
       return null;
     } else if (response.status < 500) {
       const data = await response.json();
@@ -61,7 +67,7 @@ export const getEventsByUserId = (userId) => async (dispatch) => {
   const response = await fetch(`/api/users/${userId}/events`);
   if (response.ok) {
     const events = await response.json();
-    dispatch(setEvents(events));
+    dispatch(setMyEvents(events));
     return null;
   } else if (response.status < 500) {
     const data = await response.json();
@@ -73,13 +79,35 @@ export const getEventsByUserId = (userId) => async (dispatch) => {
   }
 };
 
-export default function reducer(state = { myEvents: null }, action) {
+export const getAllEvents = () => async (dispatch) => {
+  const response = await fetch(`/api/events`);
+  if (response.ok) {
+    const events = await response.json();
+    dispatch(setAllEvents(events));
+    return null;
+  } else if (response.status < 500) {
+    const data = await response.json();
+    if (data.errors) {
+      return data.errors;
+    }
+  } else {
+    return ["An error occurred. Please try again."];
+  }
+};
+
+export default function reducer(
+  state = { eventsHostedByMe: null, allEvents: null },
+  action
+) {
   switch (action.type) {
-    case SET_EVENTS:
-      return { myEvents: action.events };
+    case SET_ALLEVENTS:
+      return { ...state, allEvents: action.events };
+    case SET_MYEVENTS:
+      return { ...state, eventsHostedByMe: action.events };
     case ADD_EVENT:
       return {
-        myEvents: { ...state.myEvents, [action.event.id]: action.event },
+        allEvents: { ...state.allEvents, [action.event.id]: action.event },
+        eventsHostedByMe: { ...state.eventsHostedByMe, [action.event.id]: action.event },
       };
     default:
       return state;

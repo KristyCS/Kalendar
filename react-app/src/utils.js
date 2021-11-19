@@ -1,6 +1,17 @@
-export const dayjs = require("dayjs");
+const customParseFormat = require('dayjs/plugin/customParseFormat')
+export let  dayjs = require("dayjs");
 const isBetween = require("dayjs/plugin/isBetween");
 dayjs.extend(isBetween);
+dayjs.extend(customParseFormat)
+export const dayName = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
 export const monthName = [
   "January",
   "February",
@@ -15,6 +26,9 @@ export const monthName = [
   "November",
   "December",
 ];
+
+
+
 export const buildMonthFrame = (date = new Date()) => {
   const firstDateInMonth = dayjs(date).startOf("month");
   const firstDateCurrentPeriod = firstDateInMonth.subtract(
@@ -35,7 +49,7 @@ export const buildMonthFrame = (date = new Date()) => {
 };
 
 export const getEventsInThisPeriod = (events, date) => {
-  const enentsArray = events ? Object.values(events) : [];
+  const enentsArray = events ? events : [];
   const firstDateInMonth = dayjs(date).startOf("month");
   const lastDateInMonth = dayjs(date).endOf("month");
 

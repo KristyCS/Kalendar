@@ -1,0 +1,5 @@
+.table-edit-rsvp-cell {
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
+}

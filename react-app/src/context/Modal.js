@@ -20,7 +20,7 @@ export function ModalProvider({ children }) {
   );
 }
 
-export function Modal({ onClose, children }) {
+export function Modal({ onClose, children, type }) {
   const modalNode = useContext(ModalContext);
   if (!modalNode) return null;
 
