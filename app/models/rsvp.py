@@ -9,7 +9,7 @@ class Rsvp(db.Model):
     status = db.Column(db.String(10), nullable = False)
     comment = db.Column(db.String(2200), nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.now())
+    updated_at = db.Column(db.DateTime, onupdate=datetime.now())
 
 
     user = db.relationship("User", back_populates="rsvps")
@@ -22,5 +22,6 @@ class Rsvp(db.Model):
             'event': self.event.to_simple_dict(),
             'status': self.status,
             'comment': self.comment,
+            'updated_at':self.updated_at,
         }
 

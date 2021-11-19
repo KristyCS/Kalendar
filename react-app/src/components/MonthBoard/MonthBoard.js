@@ -16,7 +16,7 @@ const MonthBoard = ({ eventsInThisPeriod }) => {
   const [event, setEvent] = useState();
   const [showEventDetailModal, setShowEventDetailModal] = useState(false);
   const { currentDate } = useCurrentDateContext();
-  const [labelSet, setLabelSet] = useState({});
+  const [labelSet, setLabelSet] = useState(new Set());
   const {
     checkFamily,
     setCheckFamily,

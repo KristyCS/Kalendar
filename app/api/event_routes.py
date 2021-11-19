@@ -1,5 +1,5 @@
 from flask import Blueprint,jsonify,request
-from app.models import db, Event
+from app.models import db, Event, event
 from app.forms import EventForm
 from flask_login import login_required
 from ..util import validation_errors_to_error_messages
@@ -10,6 +10,13 @@ import uuid
 from ..aws_s3  import upload_file_to_s3 
 
 event_routes = Blueprint("events",__name__)
+
+
+@event_routes.route('')
+@login_required
+def allEvents():
+    allEvents=Event.query.all()
+    return {event.id:event.to_dict() for event in allEvents}
 
 @event_routes.route('/<int:id>',methods=['PUT'])
 @login_required

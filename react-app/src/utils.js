@@ -26,6 +26,9 @@ export const monthName = [
   "November",
   "December",
 ];
+
+
+
 export const buildMonthFrame = (date = new Date()) => {
   const firstDateInMonth = dayjs(date).startOf("month");
   const firstDateCurrentPeriod = firstDateInMonth.subtract(
@@ -46,7 +49,7 @@ export const buildMonthFrame = (date = new Date()) => {
 };
 
 export const getEventsInThisPeriod = (events, date) => {
-  const enentsArray = events ? Object.values(events) : [];
+  const enentsArray = events ? events : [];
   const firstDateInMonth = dayjs(date).startOf("month");
   const lastDateInMonth = dayjs(date).endOf("month");
 
