@@ -6,7 +6,7 @@ from datetime import datetime
 def seed_events():
     fake = Faker()
     event1 = Event(
-        host_id=1, theme='cooking', description=fake.text(800), \
+        host_id=1, theme='trip', description=fake.text(800), \
             poster="https://images.unsplash.com/photo-1506368249639-73a05d6f6488?ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8Y29va2luZ3xlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60", \
             city='Boston',state="MA", \
             label='family',

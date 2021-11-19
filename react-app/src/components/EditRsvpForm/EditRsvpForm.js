@@ -2,20 +2,25 @@ import React from "react";
 import "./EditRsvpForm.css";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
+import { useRsvpChangeContext } from "../../context/rsvpUpdate";
 import { editRsvp } from "../../store/session";
 export default function EditRsvpForm({ rsvp, setShowEditRsvpForm }) {
   const [status, setStatus] = useState(rsvp.status);
   const [comment, setComment] = useState(rsvp.comment);
+  const { rsvpChange, setRsvpChange } = useRsvpChangeContext();
   const dispatch = useDispatch();
   const editRsvpHandler = async (e) => {
     e.preventDefault();
     rsvp.status = status;
-    await dispatch(editRsvp({
-        id:rsvp.id,
-        user_id:rsvp.user.id,
-        event_id:rsvp.event.id,
-        status:rsvp.status
-    }));
+    await dispatch(
+      editRsvp({
+        id: rsvp.id,
+        user_id: rsvp.user.id,
+        event_id: rsvp.event.id,
+        status: rsvp.status,
+      })
+    );
+    setRsvpChange(rsvpChange + 1);
     setShowEditRsvpForm(false);
   };
 

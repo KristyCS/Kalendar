@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 import { getEventsInThisPeriod, dayjs } from "../../utils";
 import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
 import { monthName } from "../../utils";
+import { useRsvpChangeContext } from "../../context/rsvpUpdate";
 import MyRsvpsList from "../MyRsvpsList/MyRsvpsList";
 const HomePage = () => {
   const user = useSelector((state) => state.session.user);
@@ -18,6 +19,7 @@ const HomePage = () => {
   const [myEvents, setMyEvents] = useState([]);
   const [eventsInThisPeriod, setEventInThisPeriod] = useState([]);
   const dispatch = useDispatch();
+  const { rsvpChange, setRsvpChange } = useRsvpChangeContext();
   const { currentDate, setCurrentDate } = useCurrentDateContext();
   const [showMyRsvps, setShowMyRsvps] = useState(false);
   useEffect(async () => {
@@ -29,20 +31,21 @@ const HomePage = () => {
     setEventInThisPeriod(getEventsInThisPeriod(myEvents, currentDate.utc()));
   }, [myEvents, currentDate]);
   useEffect(() => {
-    const newMyEvents = [];
+    let newMyEvents = [];
     if (eventsHostedByMe) {
-      Object.values(eventsHostedByMe);
+      newMyEvents = Object.values(eventsHostedByMe);
     }
     if (user.rsvps) {
       for (const [key, rsvp] of Object.entries(user.rsvps)) {
         if (rsvp.status === "yes") {
-          console.log(allEvents)
-          newMyEvents.push(allEvents[parseInt(rsvp.event.id)]);
+          if (allEvents) {
+            newMyEvents.push(allEvents[parseInt(rsvp.event.id)]);
+          }
         }
       }
     }
     setMyEvents(newMyEvents);
-  }, [allEvents]);
+  }, [allEvents, rsvpChange,eventsHostedByMe]);
   return (
     <div className="home-page-container">
       <div className="left-nav-container">

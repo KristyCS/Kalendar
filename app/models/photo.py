@@ -10,8 +10,8 @@ class Photo(db.Model):
     event_id = db.Column(db.Integer, db.ForeignKey("events.id"), nullable = False)
     img_url = db.Column(db.String(), nullable = True)
     comment = db.Column(db.String(), nullable = True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow,onupdate=datetime.now())
+    created_at = db.Column(db.DateTime, default=datetime.now)
+    updated_at = db.Column(db.DateTime, default=datetime.now,onupdate=datetime.now)
 
     user = db.relationship("User", back_populates = "photos")
     event = db.relationship("Event", back_populates = "photos")
