@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Modal } from "../../context/Modal";
 import { useEventLabelContext } from "../../context/EventLabel";
 import EventDetailPage from "../EventDetailPage/EventDetailPage";
+import { v4 as uuidv4 } from 'uuid';
 const dayjs = require("dayjs");
 const utc = require("dayjs/plugin/utc");
 const timezone = require("dayjs/plugin/timezone");
@@ -47,10 +48,10 @@ const MonthBoard = ({ eventsInThisPeriod }) => {
           <div className="large-head-content">Sat</div>
         </div>
         {monthFrame.map((week, idx) => (
-          <div key={`week.mondiv()${idx}`} className="large-week">
+          <div key={uuidv4()} className="large-week">
             {week.map((day, idx) => (
               <div
-                key={`day.month()day.day()${idx}`}
+                key={uuidv4()}
                 id={day.month() + "-" + day.date()}
                 className="large-day-content"
               >
@@ -59,9 +60,9 @@ const MonthBoard = ({ eventsInThisPeriod }) => {
                   `${day.month()}-${day.date()}` in eventsInThisPeriod && (
                     <div className="event-lists">
                       {eventsInThisPeriod[`${day.month()}-${day.date()}`].map(
-                        (event, idk) => (<>
+                        (event, idk) => (<div key={uuidv4()}>
                           {labelSet.has(event.label) && <div
-                            key={event.description+idk}
+                            key={uuidv4()}
                             className={"event-" + event.label}
                             onClick={() => {
                               setEvent(event);
@@ -69,7 +70,7 @@ const MonthBoard = ({ eventsInThisPeriod }) => {
                             }}
                           >
                             {event.theme}
-                          </div>}</>
+                          </div>}</div>
                         )
                       )}
                     </div>
