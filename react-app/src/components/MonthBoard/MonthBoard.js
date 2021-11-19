@@ -3,6 +3,7 @@ import "./MonthBoard.css";
 import { useCurrentDateContext } from "../../context/CurrentDate";
 import { useEffect, useState } from "react";
 import { Modal } from "../../context/Modal";
+import { useEventLabelContext } from "../../context/EventLabel";
 import EventDetailPage from "../EventDetailPage/EventDetailPage";
 const dayjs = require("dayjs");
 const utc = require("dayjs/plugin/utc");
@@ -14,10 +15,25 @@ const MonthBoard = ({ eventsInThisPeriod }) => {
   const [event, setEvent] = useState();
   const [showEventDetailModal, setShowEventDetailModal] = useState(false);
   const { currentDate } = useCurrentDateContext();
+  const [labelSet, setLabelSet] = useState({});
+  const {
+    checkFamily,
+    setCheckFamily,
+    checkWork,
+    setCheckWork,
+    checkOther,
+    setCheckOther,
+  } = useEventLabelContext();
   useEffect(() => {
     setMonthFrame(buildMonthFrame(currentDate));
   }, [currentDate]);
-
+  useEffect(() => {
+    const newLabelSet = new Set();
+    checkFamily && newLabelSet.add("family") ;
+    checkWork && newLabelSet.add("work");
+    checkOther && newLabelSet.add("other") ;
+    setLabelSet(newLabelSet);
+  }, [checkFamily, checkWork, checkOther]);
   return (
     <div>
       <div className="large-board">
@@ -34,25 +50,26 @@ const MonthBoard = ({ eventsInThisPeriod }) => {
           <div key={`week.mondiv()${idx}`} className="large-week">
             {week.map((day, idx) => (
               <div
-                key={`day.day()${idx}`}
+                key={`day.month()day.day()${idx}`}
                 id={day.month() + "-" + day.date()}
                 className="large-day-content"
               >
                 <p className="large-date">{day.date()}</p>
-                {eventsInThisPeriod &&
+                {eventsInThisPeriod && 
                   `${day.month()}-${day.date()}` in eventsInThisPeriod && (
                     <div className="event-lists">
                       {eventsInThisPeriod[`${day.month()}-${day.date()}`].map(
-                        (event, idk) => (
-                          <div
-                            key={idk}
+                        (event, idk) => (<>
+                          {labelSet.has(event.label) && <div
+                            key={event.description+idk}
+                            className={"event-" + event.label}
                             onClick={() => {
                               setEvent(event);
                               setShowEventDetailModal(true);
                             }}
                           >
                             {event.theme}
-                          </div>
+                          </div>}</>
                         )
                       )}
                     </div>

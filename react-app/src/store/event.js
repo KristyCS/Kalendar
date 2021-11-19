@@ -18,6 +18,7 @@ export const createEvent =
     description,
     posterFile,
     city,
+    label,
     state,
     start_at,
     end_at,
@@ -32,6 +33,7 @@ export const createEvent =
     formData.append("start_at", start_at);
     formData.append("end_at", end_at);
     formData.append("posterFile", posterFile);
+    formData.append("label", label);
   
     const response = await fetch("/api/events", {
       method: "POST",

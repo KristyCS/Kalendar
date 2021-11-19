@@ -1,6 +1,17 @@
-export const dayjs = require("dayjs");
+const customParseFormat = require('dayjs/plugin/customParseFormat')
+export let  dayjs = require("dayjs");
 const isBetween = require("dayjs/plugin/isBetween");
 dayjs.extend(isBetween);
+dayjs.extend(customParseFormat)
+export const dayName = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
 export const monthName = [
   "January",
   "February",

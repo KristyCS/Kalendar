@@ -7,6 +7,7 @@ class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     host_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     theme = db.Column(db.String(1000), nullable=False)
+    label = db.Column(db.String(),nullable=False)
     description = db.Column(db.String(), nullable=True)
     poster = db.Column(db.String(), nullable=True)
     city = db.Column(db.String(50), nullable=False)
@@ -27,6 +28,7 @@ class Event(db.Model):
         return {
             'id': self.id,
             'host': self.host.to_simple_dict(),
+            'label':self.label,
             'description': self.description,
             'theme': self.theme,
             'poster': self.poster,
@@ -45,7 +47,3 @@ class Event(db.Model):
             'id': self.id,
             'host': self.host.to_simple_dict(),
         }
-
-    def update(self, description=None):
-        self.description = description if description else self.description
-        return self

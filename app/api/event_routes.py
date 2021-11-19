@@ -47,9 +47,11 @@ def deleteEvent(id):
 @login_required
 def createEvent():
     form = EventForm()
-    posterFile = request.files.getlist('posterFile')[0]
-    posterFile.filename = uuid.uuid4().hex + '.'+ posterFile.filename.split('.')[1]
-    photo_url = upload_file_to_s3(posterFile, 'kalendar-aa')
+    photo_url = ""
+    if request.files.getlist('posterFile'):
+        posterFile = request.files.getlist('posterFile')[0]
+        posterFile.filename = uuid.uuid4().hex + '.'+ posterFile.filename.split('.')[1]
+        photo_url = upload_file_to_s3(posterFile, 'kalendar-aa')
     city = form.data["city"]
     state = form.data["state"]
     response = requests.get(

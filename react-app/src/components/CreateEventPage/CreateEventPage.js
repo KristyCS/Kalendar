@@ -1,25 +1,49 @@
 import "./CreateEventPage.css";
 import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
-// import 'rc-time-picker/assets/index.css';
+import Select from "react-select";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { createEvent } from "../../store/event";
 import { useCurrentDateContext } from "../../context/CurrentDate";
-const dayjs = require("dayjs");
+import { dayjs } from "../../utils";
 const CreateEventPage = ({ setShowCreateEventModal }) => {
   const user = useSelector((state) => state.session.user);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [errors, setErrors] = useState([]);
-  const [startTime, setStartTime] = useState();
-  const [endTime, setEndTime] = useState();
+  const [startTime, setStartTime] = useState("8:00");
+  const [endTime, setEndTime] = useState("8:30");
   const [theme, setTheme] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
+  const [label, setLabel] = useState("family");
   const [posterFile, setPosterFile] = useState(null);
   const [description, setDescription] = useState("");
   const { setCurrentDate } = useCurrentDateContext();
+  const labelOptions = [
+    { value: "family", label: "family" },
+    { value: "work", label: "work" },
+    { value: "other", label: "other" },
+  ];
+  const customStyles = {
+    option: (provided, state) => ({
+      ...provided,
+      borderBottom: "1px dotted pink",
+      color: state.isSelected ? "red" : "blue",
+      padding: 20,
+    }),
+    control: () => ({
+      // none of react-select's styles are passed to <Control />
+      width: 200,
+    }),
+    singleValue: (provided, state) => {
+      const opacity = state.isDisabled ? 0.5 : 1;
+      const transition = "opacity 300ms";
+
+      return { ...provided, opacity, transition };
+    },
+  };
   const dispatch = useDispatch();
 
   const createEventHandler = async (e) => {
@@ -31,6 +55,7 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
       posterFile,
       city,
       state,
+      label:label["value"],
       start_at: "".concat(
         dayjs(startDate).format("MM/DD/YY"),
         " ",
@@ -43,7 +68,7 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
     if (data) {
       setErrors(data);
     } else {
-      // setShowCreateEventModal(false);
+      setShowCreateEventModal(false);
     }
   };
   return (
@@ -62,6 +87,11 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
           placeholder="Add Theme"
           required
         ></input>
+        <Select
+          styles={customStyles}
+          onChange={setLabel}
+          options={labelOptions}
+        />
         <div className="start-date">
           <DatePicker
             selected={startDate}
@@ -74,6 +104,7 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
         <div className="start-time">
           <TimePicker
             selected={startTime}
+            value={startTime}
             onChange={(value) => {
               setStartTime(value);
             }}
@@ -90,6 +121,7 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
         <div className="end-time">
           <TimePicker
             selected={endTime}
+            value={endTime}
             onChange={(time) => {
               setEndTime(time);
             }}

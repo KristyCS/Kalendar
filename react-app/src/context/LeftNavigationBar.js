@@ -6,9 +6,10 @@ export const useLeftNavigationBarContext = () => useContext(LeftNavigationBarCon
 
 const LeftNavigationBarProvider = ({ children }) => {
   const [showLeftNavigationBar, setShowLeftNavigationBar] = useState();
+  const [selectedLabels, setSelectedLabels] = useState(['family','work','other']);
 
   return (
-    <LeftNavigationBarContext.Provider value={{ showLeftNavigationBar, setShowLeftNavigationBar }}>
+    <LeftNavigationBarContext.Provider value={{ selectedLabels, setSelectedLabels,showLeftNavigationBar, setShowLeftNavigationBar }}>
       { children }
     </LeftNavigationBarContext.Provider>
   );

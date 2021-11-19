@@ -12,23 +12,30 @@ import { GiHamburgerMenu } from "react-icons/gi";
 const dayjs = require("dayjs");
 const NavBar = () => {
   const user = useSelector((state) => state.session.user);
-  const { currentDate, setCurrentDate } = useCurrentDateContext();
+  const { currentDate, setCurrentDate, setMiniBoardMarker } =
+    useCurrentDateContext();
 
   return (
     <nav>
       <div className="nav-container">
         <div className="h-container">
-          <GiHamburgerMenu className ="hamber-icon" size={25}/>
+          <GiHamburgerMenu className="hamber-icon" size={25} />
         </div>
         <div>
-          <RiCalendarCheckFill size={30}/>
+          <RiCalendarCheckFill size={30} />
           <NavLink to="/" exact={true} className="Kalendar">
             Kalendar
           </NavLink>
         </div>
         {user && (
-          <div className = "date-nav-container">
-            <div className="today" onClick={() => setCurrentDate(dayjs())}>
+          <div className="date-nav-container">
+            <div
+              className="today"
+              onClick={() => {
+                setMiniBoardMarker(dayjs());
+                setCurrentDate(dayjs());
+              }}
+            >
               {" "}
               Today
             </div>
