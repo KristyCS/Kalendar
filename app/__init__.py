@@ -10,7 +10,6 @@ from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
 from .api.event_routes import event_routes
 from .seeds import seed_commands
-
 from .config import Config
 
 app = Flask(__name__)

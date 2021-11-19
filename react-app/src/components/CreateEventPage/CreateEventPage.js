@@ -1,36 +1,61 @@
 import "./CreateEventPage.css";
 import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
-// import 'rc-time-picker/assets/index.css';
+import Select from "react-select";
 import { useSelector, useDispatch } from "react-redux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createEvent } from "../../store/event";
 import { useCurrentDateContext } from "../../context/CurrentDate";
-const dayjs = require("dayjs");
+import { dayjs } from "../../utils";
 const CreateEventPage = ({ setShowCreateEventModal }) => {
   const user = useSelector((state) => state.session.user);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [errors, setErrors] = useState([]);
-  const [startTime, setStartTime] = useState();
-  const [endTime, setEndTime] = useState();
+  const [startTime, setStartTime] = useState("8:00");
+  const [endTime, setEndTime] = useState("8:30");
   const [theme, setTheme] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
+  const [label, setLabel] = useState("family");
   const [posterFile, setPosterFile] = useState(null);
   const [description, setDescription] = useState("");
+  const [users, setUsers] = useState([]);
   const { setCurrentDate } = useCurrentDateContext();
+  const [participants, setParticipants] = useState([]);
+  const labelOptions = [
+    { value: "family", label: "family" },
+    { value: "work", label: "work" },
+    { value: "other", label: "other" },
+  ];
   const dispatch = useDispatch();
-
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch("/api/users/");
+      const responseData = await response.json();
+      setUsers(responseData.users);
+    }
+    fetchData();
+  }, []);
+  const options = []
+  for(const user of users){
+   options.push({ value: user.id, label: user.username }    )
+  }
   const createEventHandler = async (e) => {
     e.preventDefault();
+    const participantArray = []
+    for (const participant of participants){
+      participantArray.push(participant["value"])
+    }
     const newEvent = {
       host_id: user.id,
       theme,
       description,
       posterFile,
+      participants:participantArray,
       city,
       state,
+      label: label["value"],
       start_at: "".concat(
         dayjs(startDate).format("MM/DD/YY"),
         " ",
@@ -48,20 +73,25 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
   };
   return (
     <div className="create-event-container">
-      <form onSubmit={createEventHandler}>
+      <form className="create-event-form" onSubmit={createEventHandler}>
         <div>
           {errors.map((error, ind) => (
             <div key={ind}>{error}</div>
           ))}
         </div>
-        <input
-          className="theme"
-          onChange={(e) => {
-            setTheme(e.target.value);
-          }}
-          placeholder="Add Theme"
-          required
-        ></input>
+        <div className="theme-container">
+          <input
+            className="theme"
+            onChange={(e) => {
+              setTheme(e.target.value);
+            }}
+            placeholder="Add Theme"
+            required
+          ></input>
+        </div>
+        <div className="select-label">
+          <Select onChange={setLabel} options={labelOptions} />
+        </div>
         <div className="start-date">
           <DatePicker
             selected={startDate}
@@ -73,7 +103,9 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
         </div>
         <div className="start-time">
           <TimePicker
+            closeClock={false}
             selected={startTime}
+            value={startTime}
             onChange={(value) => {
               setStartTime(value);
             }}
@@ -90,10 +122,14 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
         <div className="end-time">
           <TimePicker
             selected={endTime}
+            value={endTime}
             onChange={(time) => {
               setEndTime(time);
             }}
           />
+        </div>
+        <div className="participants">
+        <Select isMulti onChange={setParticipants} options={options}/>
         </div>
         <div className="city">
           <input

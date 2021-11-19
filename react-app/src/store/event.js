@@ -1,3 +1,4 @@
+import { createRsvp } from "./rsvp";
 const SET_EVENTS = "SET_EVENTS";
 const ADD_EVENT = "ADD_EVENT";
 
@@ -18,30 +19,34 @@ export const createEvent =
     description,
     posterFile,
     city,
+    label,
+    participants,
     state,
     start_at,
     end_at,
   }) =>
   async (dispatch) => {
+    const formData = new FormData();
+    formData.append("host_id", host_id);
+    formData.append("theme", theme);
+    formData.append("description", description);
+    formData.append("city", city);
+    formData.append("state", state);
+    formData.append("start_at", start_at);
+    formData.append("end_at", end_at);
+    formData.append("posterFile", posterFile);
+    formData.append("label", label);
+
     const response = await fetch("/api/events", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        host_id,
-        theme,
-        description,
-        posterFile,
-        city,
-        state,
-        start_at,
-        end_at,
-      }),
+      body: formData,
     });
     if (response.ok) {
       const event = await response.json();
       dispatch(addEvent(event));
+      for (const participant in participants) {
+        dispatch(createRsvp({ user_id: participant, event_id: event.id }));
+      }
       return null;
     } else if (response.status < 500) {
       const data = await response.json();

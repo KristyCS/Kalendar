@@ -6,19 +6,10 @@ from ..util import validation_errors_to_error_messages
 from datetime import datetime
 from app.config import Config
 import requests
+import uuid
+from ..aws_s3  import upload_file_to_s3 
 
 event_routes = Blueprint("events",__name__)
-
-# def createImagesByPostId(photos, postId):
-#     if photos:
-#         for photo in photos:
-#             # image.filename = get_unique_filename(image.filename)
-#             photo_url = upload_file_to_s3(photo, 'foodstagramdev')
-#             photo_url = "https://foodstagramdev.s3.amazonaws.com/"+photo.filename
-#             photo = Photo(post_id=postId, photo_url=photo_url)
-#             db.session.add(photo)
-#             db.session.commit()
-
 
 @event_routes.route('/<int:id>',methods=['PUT'])
 @login_required
@@ -41,6 +32,8 @@ def editEvent(id):
         return event.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
+
+
 @event_routes.route('/<int:id>',methods=['DELETE'])
 @login_required
 def deleteEvent(id):
@@ -49,12 +42,16 @@ def deleteEvent(id):
     db.session.commit()
     return {"id":id}
 
+
 @event_routes.route('',methods=['POST'])
 @login_required
 def createEvent():
     form = EventForm()
-    print(request.files,"&&&&&&&&&&&&&&&&&&&&&")
-    print(request.files.getlist('posterFile'),"^^^^^^^^^^^^^^^^^^^^")
+    photo_url = ""
+    if request.files.getlist('posterFile'):
+        posterFile = request.files.getlist('posterFile')[0]
+        posterFile.filename = uuid.uuid4().hex + '.'+ posterFile.filename.split('.')[1]
+        photo_url = upload_file_to_s3(posterFile, 'kalendar-aa')
     city = form.data["city"]
     state = form.data["state"]
     response = requests.get(
@@ -66,6 +63,7 @@ def createEvent():
     if form.validate_on_submit():
         event = Event()
         form.populate_obj(event)
+        event.poster = photo_url
         event.lat = data["results"][0]["geometry"]["lat"]
         event.lng = data["results"][0]["geometry"]["lng"]
         db.session.add(event)

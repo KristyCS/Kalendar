@@ -1,5 +1,9 @@
 /* TODO Add site wide styles */
 @import 'react-datepicker/dist/react-datepicker';
+@import 'react-clock/dist/Clock.css';
+@import 'react-time-picker/dist/TimePicker.css';
+
+
 * {
   margin: 0;
   padding:0;

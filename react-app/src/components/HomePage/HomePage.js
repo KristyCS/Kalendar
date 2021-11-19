@@ -1,6 +1,7 @@
 import MiniMonthBoard from "../MiniMonthBoard/MiniMonthBoard";
 import MonthBoard from "../MonthBoard/MonthBoard";
 import "./HomePage.css";
+import MyCalendars from "../MyCalendars/MyCalendars"
 import CreateEventButton from "../CreateEventButton/CreateEventButton";
 import { useCurrentDateContext } from "../../context/CurrentDate";
 import { getEventsByUserId } from "../../store/event";
@@ -38,6 +39,7 @@ const HomePage = () => {
           <MdArrowForwardIos onClick={()=>setCurrentDate(dayjs(currentDate).add(1,"month"))}/></div>
         </div>
         <MiniMonthBoard />
+        <MyCalendars />
       </div>
       <div className="main-container">
         <MonthBoard eventsInThisPeriod={eventsInThisPeriod} />
