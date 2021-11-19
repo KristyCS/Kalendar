@@ -10,7 +10,7 @@ rsvp_routes = Blueprint("rsvps",__name__)
 
 @rsvp_routes.route('',methods=['POST'])
 @login_required
-def createEvent():
+def createRsvp():
     form = RsvpForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
@@ -23,12 +23,15 @@ def createEvent():
 
 @rsvp_routes.route('/<int:id>',methods=['PUT'])
 @login_required
-def editEvent(id):
+def editRsvp(id):
+    # print("@@@@@@@@@@@@@@@@request!!!!!!!!!!",request.data)
+    # print("@@@@@@@@@@@@@@@@request!!!!!!!!!!",request.data)
     form = RsvpForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         rsvp = Rsvp.query.get(id)
         rsvp.status = form.data["status"]
+        rsvp.comment = form.data["comment"]
         db.session.commit()
         return rsvp.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401

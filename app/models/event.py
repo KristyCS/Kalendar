@@ -16,8 +16,8 @@ class Event(db.Model):
     lng = db.Column(db.Numeric(scale=7),nullable=False)
     start_at = db.Column(db.DateTime(timezone=False),nullable=False)
     end_at = db.Column(db.DateTime(timezone=False),nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow,onupdate=datetime.now())
+    created_at = db.Column(db.DateTime, default=datetime.now)
+    updated_at = db.Column(db.DateTime, default=datetime.now,onupdate=datetime.now)
     
     
     host = db.relationship( "User", back_populates = "events")
