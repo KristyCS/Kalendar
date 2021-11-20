@@ -81,7 +81,7 @@ const MonthBoard = ({ eventsInThisPeriod }) => {
         ))}
         {showEventDetailModal && (
           <Modal onClose={() => setShowEventDetailModal(false)}>
-            <EventDetailPage event={event} />
+            <EventDetailPage setShowEventDetailModal={setShowEventDetailModal} event={event} />
           </Modal>
         )}
       </div>
