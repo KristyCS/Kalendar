@@ -38,7 +38,7 @@ def seed_events():
             start_at=datetime(2021,11,17,7,15,00), \
             end_at=datetime(2021,11,17,11,30,00))
     event5 = Event(
-        host_id=2, theme='cooking', description=fake.text(400), \
+        host_id=2, theme='school', description=fake.text(400), \
             poster="https://media.istockphoto.com/photos/reusable-bag-full-of-colourful-and-fresh-organic-vegetables-and-on-picture-id1272443198?b=1&k=20&m=1272443198&s=170667a&w=0&h=mIGGm1JtUeTShSLCDSd1iK5KrAatbM0NSklUe49pAec=", \
             city='New York',state="NY", \
             label='work',

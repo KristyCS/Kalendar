@@ -17,6 +17,8 @@ const setAllEvents = (events) => ({
   events,
 });
 
+export const editEvent =()=>{}
+
 export const createEvent =
   ({
     host_id,

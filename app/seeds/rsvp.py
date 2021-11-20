@@ -3,11 +3,8 @@ from faker import Faker
 
 def seed_Rsvp():
     fake = Faker()
-    rsvp1 = Rsvp(
-        user_id = 5, event_id = 2, status="yes", comment= fake.text(100), 
-     )
     rsvp2 = Rsvp(
-        user_id = 1, event_id = 3, status="no rsp", comment= fake.text(100), 
+        user_id = 1, event_id = 4, status="no rsp", comment= fake.text(100), 
     )
     rsvp3 = Rsvp(
         user_id = 5, event_id = 1, status="yes", comment= fake.text(100), 
@@ -19,7 +16,7 @@ def seed_Rsvp():
         user_id = 2, event_id = 1, status="no", comment= fake.text(100), 
      )
     rsvp6 = Rsvp(
-        user_id = 1, event_id = 2, status="yes", comment= fake.text(100), 
+        user_id = 1, event_id = 5, status="yes", comment= fake.text(100), 
      )
     rsvp7 = Rsvp(
         user_id = 5, event_id = 3, status="no", comment= fake.text(100), 
@@ -40,7 +37,6 @@ def seed_Rsvp():
         user_id = 4, event_id = 4, status="yes", comment= fake.text(100), 
      )
     
-    db.session.add(rsvp1)
     db.session.add(rsvp2)
     db.session.add(rsvp3)
     db.session.add(rsvp4)
