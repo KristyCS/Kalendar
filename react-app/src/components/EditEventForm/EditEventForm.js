@@ -19,7 +19,10 @@ export default function EditEventForm({ setShowEditEventModal, event }) {
   const [theme, setTheme] = useState(event.theme);
   const [city, setCity] = useState(event.city);
   const [state, setState] = useState(event.state);
-  const [label, setLabel] = useState({ value: event.label, label: event.label });
+  const [label, setLabel] = useState({
+    value: event.label,
+    label: event.label,
+  });
   const [posterFile, setPosterFile] = useState(null);
   const [description, setDescription] = useState(event.description);
   const [allUsers, setAllUsers] = useState([]);
@@ -32,17 +35,21 @@ export default function EditEventForm({ setShowEditEventModal, event }) {
   ];
   const dispatch = useDispatch();
   useEffect(() => {
+    setStartDate(new Date(startDate.getTime() + 5*60*60000))
+    setStartTime(new Date(startDate.getTime() + 5*60*60000).getHours().toString()+":"+new Date(startDate.getTime() + 5*60*60000).getMinutes().toString())
+    setEndDate(new Date(endDate.getTime() + 5*60*60000))
+    setEndTime(new Date(endDate.getTime() + 5*60*60000).getHours().toString()+":"+new Date(endDate.getTime() + 5*60*60000).getMinutes().toString())
     async function fetchData() {
       const response = await fetch("/api/users/");
       const responseData = await response.json();
       setAllUsers(responseData.users);
     }
     fetchData();
-    const newParticipants=[]
-    for(const rsvp of (event.rsvps)){
-        newParticipants.push({ value: rsvp.user.id, label: rsvp.user.username })
+    const newParticipants = [];
+    for (const rsvp of event.rsvps) {
+      newParticipants.push({ value: rsvp.user.id, label: rsvp.user.username });
     }
-    setParticipants(newParticipants)
+    setParticipants(newParticipants);
   }, []);
   const options = [];
   for (const u of allUsers) {
@@ -57,6 +64,7 @@ export default function EditEventForm({ setShowEditEventModal, event }) {
       participantArray.push(participant["value"]);
     }
     const newEvent = {
+      id: event.id,
       host_id: user.id,
       theme,
       description,
@@ -71,7 +79,12 @@ export default function EditEventForm({ setShowEditEventModal, event }) {
         startTime,
         ":00"
       ),
-      end_at: "".concat(dayjs(endDate).format("MM/DD/YY"), " ", endTime, ":00"),
+      end_at: "".concat(
+        dayjs(endDate).format("MM/DD/YY"),
+        " ",
+        endTime,
+        ":00"
+      ),
     };
     const data = await dispatch(editEvent(newEvent));
     if (data) {
@@ -101,11 +114,7 @@ export default function EditEventForm({ setShowEditEventModal, event }) {
           ></input>
         </div>
         <div className="select-label">
-          <Select
-            onChange={setLabel}
-            value={label}
-            options={labelOptions}
-          />
+          <Select onChange={setLabel} value={label} options={labelOptions} />
         </div>
         <div className="start-date">
           <DatePicker
@@ -145,7 +154,12 @@ export default function EditEventForm({ setShowEditEventModal, event }) {
           />
         </div>
         <div className="participants">
-          <Select isMulti value={participants} onChange={setParticipants} options={options} />
+          <Select
+            isMulti
+            value={participants}
+            onChange={setParticipants}
+            options={options}
+          />
         </div>
         <div className="city">
           <input
@@ -172,7 +186,17 @@ export default function EditEventForm({ setShowEditEventModal, event }) {
             column={20}
           />
         </div>
-        <button type="submit">Save</button>
+        <div className="poster">
+          <input
+            type="file"
+            onChange={(e) => {
+              setPosterFile(e.target.files[0]);
+            }}
+            accept="image/*"
+            multiple={true}
+          />
+        </div>
+        <button type="submit">Update</button>
       </form>
     </div>
   );

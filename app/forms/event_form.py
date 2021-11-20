@@ -2,14 +2,17 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField,DecimalField,DateTimeField
 from wtforms.validators import DataRequired, Length, ValidationError
 from app.models import Event
-from datetime import datetime
+from datetime import date, datetime
 
 def timeCheck(form, field):
-
     start_at_obj = datetime.strptime(field.data, '%m/%d/%y %H:%M:%S')
     end_at_obj = datetime.strptime(form.data['end_at'], '%m/%d/%y %H:%M:%S') 
-    if start_at_obj > end_at_obj :
+    if start_at_obj >= end_at_obj :
         raise ValidationError("Start time must be before end time.")
+    if start_at_obj<datetime.now():
+        raise ValidationError("Start time must be in the future.")
+
+
 
 
 class EventForm(FlaskForm):

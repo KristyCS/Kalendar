@@ -8,10 +8,10 @@ import EditEventForm from "../EditEventForm/EditEventForm";
 import { dayjs, dayName, monthName } from "../../utils";
 const customParseFormat = require("dayjs/plugin/customParseFormat");
 dayjs.extend(customParseFormat);
-const EventDetailPage = ({ setShowEventDetailModal, event }) => {
+const EventDetailPage = ({ setShowEventDetailModal,setShowEditEventModal, event }) => {
   const [startTimeUtc, setStartTimeUtc] = useState(dayjs(event.start_at).utc());
   const [endTimeUtc, setEndTimeUtc] = useState(dayjs(event.end_at).utc());
-  const [showEditEventModal, setShowEditEventModal] = useState(false);
+  
   const user = useSelector((state) => state.session.user);
   const [startHour, setStartHour] = useState(
     startTimeUtc.hour() >= 10 ? startTimeUtc.hour() : "0" + startTimeUtc.hour()
@@ -36,18 +36,11 @@ const EventDetailPage = ({ setShowEventDetailModal, event }) => {
           <GrEdit
             onClick={() => {
               setShowEditEventModal(true);
-              // setShowEventDetailModal(true);
+              setShowEventDetailModal(false);
             }}
           />
         )}
-        {showEditEventModal && (
-          <Modal onClose={()=>setShowEditEventModal(false)}>
-            <EditEventForm
-              setShowEditEventModal={setShowEditEventModal}
-              event={event}
-            />
-          </Modal>
-        )}
+        
       </p>
       <p className="date">
         {dayName[startTimeUtc.day()] +
