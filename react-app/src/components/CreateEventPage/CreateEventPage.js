@@ -37,23 +37,24 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
     }
     fetchData();
   }, []);
-  const options = []
-  for(const u of users){
-    if(u.id !== user.id){
-   options.push({ value: u.id, label: u.username }    )}
+  const options = [];
+  for (const u of users) {
+    if (u.id !== user.id) {
+      options.push({ value: u.id, label: u.username });
+    }
   }
   const createEventHandler = async (e) => {
     e.preventDefault();
-    const participantArray = []
-    for (const participant of participants){
-      participantArray.push(participant["value"])
+    const participantArray = [];
+    for (const participant of participants) {
+      participantArray.push(participant["value"]);
     }
     const newEvent = {
       host_id: user.id,
       theme,
       description,
       posterFile,
-      participants:participantArray,
+      participants: participantArray,
       city,
       state,
       label: label["value"],
@@ -95,6 +96,7 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
         </div>
         <div className="start-date">
           <DatePicker
+            dateFormat="MM/dd/yy"
             selected={startDate}
             onChange={(date) => {
               setStartDate(date);
@@ -114,6 +116,7 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
         </div>
         <div className="end-date">
           <DatePicker
+            dateFormat="MM/dd/yy"
             selected={endDate}
             onChange={(date) => {
               setEndDate(date);
@@ -130,7 +133,7 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
           />
         </div>
         <div className="participants">
-        <Select isMulti onChange={setParticipants} options={options}/>
+          <Select isMulti onChange={setParticipants} options={options} />
         </div>
         <div className="city">
           <input

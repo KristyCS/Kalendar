@@ -17,7 +17,53 @@ const setAllEvents = (events) => ({
   events,
 });
 
-export const editEvent =()=>{}
+export const editEvent =
+  ({
+    id,
+    host_id,
+    theme,
+    description,
+    posterFile,
+    city,
+    label,
+    participants,
+    state,
+    start_at,
+    end_at,
+  }) =>
+  async (dispatch) => {
+    const formData = new FormData();
+    formData.append("id", id)
+    formData.append("host_id", host_id);
+    formData.append("theme", theme);
+    formData.append("description", description);
+    formData.append("city", city);
+    formData.append("state", state);
+    formData.append("start_at", start_at);
+    formData.append("end_at", end_at);
+    formData.append("posterFile", posterFile);
+    formData.append("label", label);
+
+    const response = await fetch(`/api/events/${id}`, {
+      method: "PUT",
+      body: formData,
+    });
+    if (response.ok) {
+      const event = await response.json();
+      dispatch(addEvent(event));
+      for (const participant of participants) {
+        dispatch(createRsvp({ user_id: participant, event_id: event.id }));
+      }
+      return null;
+    } else if (response.status < 500) {
+      const data = await response.json();
+      if (data.errors) {
+        return data.errors;
+      }
+    } else {
+      return ["An error occurred. Please try again."];
+    }
+  };
 
 export const createEvent =
   ({
@@ -109,7 +155,10 @@ export default function reducer(
     case ADD_EVENT:
       return {
         allEvents: { ...state.allEvents, [action.event.id]: action.event },
-        eventsHostedByMe: { ...state.eventsHostedByMe, [action.event.id]: action.event },
+        eventsHostedByMe: {
+          ...state.eventsHostedByMe,
+          [action.event.id]: action.event,
+        },
       };
     default:
       return state;
