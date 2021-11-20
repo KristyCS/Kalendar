@@ -1,26 +1,31 @@
-import "./CreateEventPage.css";
-import DatePicker from "react-datepicker";
-import TimePicker from "react-time-picker";
+import React from "react";
+import "./EditEventForm.css";
 import Select from "react-select";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-import { createEvent } from "../../store/event";
-import { useCurrentDateContext } from "../../context/CurrentDate";
 import { dayjs } from "../../utils";
-const CreateEventPage = ({ setShowCreateEventModal }) => {
+import { useCurrentDateContext } from "../../context/CurrentDate";
+import DatePicker from "react-datepicker";
+import TimePicker from "react-time-picker";
+import { editEvent } from "../../store/event";
+
+export default function EditEventForm({ setShowEditEventModal, event }) {
   const user = useSelector((state) => state.session.user);
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(new Date(event.start_at));
+  const [endDate, setEndDate] = useState(new Date(event.end_at));
   const [errors, setErrors] = useState([]);
-  const [startTime, setStartTime] = useState("8:00");
-  const [endTime, setEndTime] = useState("8:30");
-  const [theme, setTheme] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [label, setLabel] = useState("family");
+  const [startTime, setStartTime] = useState(new Date(event.start_at));
+  const [endTime, setEndTime] = useState(new Date(event.end_at));
+  const [theme, setTheme] = useState(event.theme);
+  const [city, setCity] = useState(event.city);
+  const [state, setState] = useState(event.state);
+  const [label, setLabel] = useState({
+    value: event.label,
+    label: event.label,
+  });
   const [posterFile, setPosterFile] = useState(null);
-  const [description, setDescription] = useState("");
-  const [users, setUsers] = useState([]);
+  const [description, setDescription] = useState(event.description);
+  const [allUsers, setAllUsers] = useState([]);
   const { setCurrentDate } = useCurrentDateContext();
   const [participants, setParticipants] = useState([]);
   const labelOptions = [
@@ -30,26 +35,36 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
   ];
   const dispatch = useDispatch();
   useEffect(() => {
+    setStartDate(new Date(startDate.getTime() + 5*60*60000))
+    setStartTime(new Date(startDate.getTime() + 5*60*60000).getHours().toString()+":"+new Date(startDate.getTime() + 5*60*60000).getMinutes().toString())
+    setEndDate(new Date(endDate.getTime() + 5*60*60000))
+    setEndTime(new Date(endDate.getTime() + 5*60*60000).getHours().toString()+":"+new Date(endDate.getTime() + 5*60*60000).getMinutes().toString())
     async function fetchData() {
       const response = await fetch("/api/users/");
       const responseData = await response.json();
-      setUsers(responseData.users);
+      setAllUsers(responseData.users);
     }
     fetchData();
+    const newParticipants = [];
+    for (const rsvp of event.rsvps) {
+      newParticipants.push({ value: rsvp.user.id, label: rsvp.user.username });
+    }
+    setParticipants(newParticipants);
   }, []);
   const options = [];
-  for (const u of users) {
+  for (const u of allUsers) {
     if (u.id !== user.id) {
       options.push({ value: u.id, label: u.username });
     }
   }
-  const createEventHandler = async (e) => {
+  const editEventHandler = async (e) => {
     e.preventDefault();
     const participantArray = [];
     for (const participant of participants) {
       participantArray.push(participant["value"]);
     }
     const newEvent = {
+      id: event.id,
       host_id: user.id,
       theme,
       description,
@@ -64,18 +79,24 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
         startTime,
         ":00"
       ),
-      end_at: "".concat(dayjs(endDate).format("MM/DD/YY"), " ", endTime, ":00"),
+      end_at: "".concat(
+        dayjs(endDate).format("MM/DD/YY"),
+        " ",
+        endTime,
+        ":00"
+      ),
     };
-    const data = await dispatch(createEvent(newEvent));
+    const data = await dispatch(editEvent(newEvent));
     if (data) {
       setErrors(data);
     } else {
-      setShowCreateEventModal(false);
+      setShowEditEventModal(false);
     }
   };
+
   return (
-    <div className="create-event-container">
-      <form className="create-event-form" onSubmit={createEventHandler}>
+    <div className="edit-event-container">
+      <form className="edit-event-form" onSubmit={editEventHandler}>
         <div>
           {errors.map((error, ind) => (
             <div key={ind}>{error}</div>
@@ -84,6 +105,7 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
         <div className="theme-container">
           <input
             className="theme"
+            value={theme}
             onChange={(e) => {
               setTheme(e.target.value);
             }}
@@ -92,11 +114,10 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
           ></input>
         </div>
         <div className="select-label">
-          <Select onChange={setLabel} options={labelOptions} />
+          <Select onChange={setLabel} value={label} options={labelOptions} />
         </div>
         <div className="start-date">
           <DatePicker
-            dateFormat="MM/dd/yy"
             selected={startDate}
             onChange={(date) => {
               setStartDate(date);
@@ -116,8 +137,8 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
         </div>
         <div className="end-date">
           <DatePicker
-            dateFormat="MM/dd/yy"
             selected={endDate}
+            value={endDate}
             onChange={(date) => {
               setEndDate(date);
             }}
@@ -133,7 +154,12 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
           />
         </div>
         <div className="participants">
-          <Select isMulti onChange={setParticipants} options={options} />
+          <Select
+            isMulti
+            value={participants}
+            onChange={setParticipants}
+            options={options}
+          />
         </div>
         <div className="city">
           <input
@@ -170,10 +196,8 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
             multiple={true}
           />
         </div>
-        <button type="submit">Save</button>
+        <button type="submit">Update</button>
       </form>
     </div>
   );
-};
-
-export default CreateEventPage;
+}

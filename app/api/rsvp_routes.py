@@ -24,8 +24,6 @@ def createRsvp():
 @rsvp_routes.route('/<int:id>',methods=['PUT'])
 @login_required
 def editRsvp(id):
-    # print("@@@@@@@@@@@@@@@@request!!!!!!!!!!",request.data)
-    # print("@@@@@@@@@@@@@@@@request!!!!!!!!!!",request.data)
     form = RsvpForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
