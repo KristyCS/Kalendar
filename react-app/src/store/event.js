@@ -64,7 +64,6 @@ export const editEvent =
           await fetch(`/api/rsvps/${rsvp.id}`, { method: "DELETE" });
         }
       }
-      console.log(participants,"!@!@!@!@!@!@!@!@!!@?participants")
       for (const participant of participants) {
         let rsvp = await fetch(
           `/api/rsvps/event/${event.id}/user/${participant}`
