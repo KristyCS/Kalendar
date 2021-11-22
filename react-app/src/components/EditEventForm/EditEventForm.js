@@ -39,6 +39,8 @@ export default function EditEventForm({ setShowEditEventModal, event }) {
     setStartTime(new Date(startDate.getTime() + 5*60*60000).getHours().toString()+":"+new Date(startDate.getTime() + 5*60*60000).getMinutes().toString())
     setEndDate(new Date(endDate.getTime() + 5*60*60000))
     setEndTime(new Date(endDate.getTime() + 5*60*60000).getHours().toString()+":"+new Date(endDate.getTime() + 5*60*60000).getMinutes().toString())
+    console.log(new Date(startDate.getTime() + 5*60*60000).getHours().toString()+":"+new Date(startDate.getTime() + 5*60*60000).getMinutes().toString(),"#######")
+    console.log(startTime,"$$$$$$$")
     async function fetchData() {
       const response = await fetch("/api/users/");
       const responseData = await response.json();
