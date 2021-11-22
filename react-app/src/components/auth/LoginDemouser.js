@@ -8,7 +8,7 @@ const LoginDemouser = () => {
     await dispatch(login("demo@aa.io", "password"));
   };
   return (
-    <div className="" onClick={loginDemo}>
+    <div className="logout" onClick={loginDemo}>
       Demo User
     </div>
   );

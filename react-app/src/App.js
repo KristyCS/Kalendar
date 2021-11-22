@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import LoginForm from './components/auth/LoginForm';
-import SignUpForm from './components/auth/SignUpForm';
-import NavBar from './components/NavBar/NavBar';
-import ProtectedRoute from './components/auth/ProtectedRoute';
-import { authenticate } from './store/session';
-import HomePage from './components/HomePage/HomePage';
+import React, { useState, useEffect } from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import LoginForm from "./components/auth/LoginForm";
+import SignUpForm from "./components/auth/SignUpForm";
+import NavBar from "./components/NavBar/NavBar";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
+import { authenticate } from "./store/session";
+import HomePage from "./components/HomePage/HomePage";
 function App() {
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
   const [rating, setRating] = useState(0);
+  // localStorage.setItem("hideNav", true);
   useEffect(() => {
-    (async() => {
+    (async () => {
       await dispatch(authenticate());
       setLoaded(true);
     })();
@@ -26,10 +27,10 @@ function App() {
     <BrowserRouter>
       <NavBar />
       <Switch>
-        <Route path='/login' exact={true}>
+        <Route path="/login" exact={true}>
           <LoginForm />
         </Route>
-        <Route path='/sign-up' exact={true}>
+        <Route path="/sign-up" exact={true}>
           <SignUpForm />
         </Route>
         {/* <ProtectedRoute path='/users' exact={true} >
@@ -38,7 +39,7 @@ function App() {
         <ProtectedRoute path='/users/:userId' exact={true} >
           <User />
         </ProtectedRoute> */}
-        <ProtectedRoute path='/' exact={true} >
+        <ProtectedRoute path="/" exact={true}>
           <HomePage />
         </ProtectedRoute>
       </Switch>

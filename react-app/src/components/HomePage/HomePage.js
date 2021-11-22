@@ -1,8 +1,10 @@
 import MiniMonthBoard from "../MiniMonthBoard/MiniMonthBoard";
 import MonthBoard from "../MonthBoard/MonthBoard";
 import "./HomePage.css";
+import { IoChevronForward } from "react-icons/io5";
 import MyCalendars from "../MyCalendars/MyCalendars";
 import CreateEventButton from "../CreateEventButton/CreateEventButton";
+import { useLeftNavigationBarContext } from "../../context/LeftNavigationBar";
 import { useCurrentDateContext } from "../../context/CurrentDate";
 import { getEventsByUserId, getAllEvents } from "../../store/event";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,6 +18,11 @@ const HomePage = () => {
   const user = useSelector((state) => state.session.user);
   const eventsHostedByMe = useSelector((state) => state.event.eventsHostedByMe);
   const allEvents = useSelector((state) => state.event.allEvents);
+  const [leftStyle, setLeftStyle] = useState("left-nav-container");
+  const [homeStyle, setHomeStyle] = useState("home-page-container");
+  const { showLeftNavigationBar, setShowLeftNavigationBar } =
+    useLeftNavigationBarContext();
+  const [hideSide, setHideSide] = useState(localStorage.getItem("hideNav"));
   const [myEvents, setMyEvents] = useState([]);
   const [eventsInThisPeriod, setEventInThisPeriod] = useState([]);
   const dispatch = useDispatch();
@@ -25,7 +32,20 @@ const HomePage = () => {
   useEffect(async () => {
     await dispatch(getEventsByUserId(user.id));
     await dispatch(getAllEvents());
-  }, [dispatch]);
+    const a = localStorage.getItem("hideNav")
+    console.log(a)
+    setHideSide(a);
+    if(a==="true"){
+      setHomeStyle("home-page-container-no-show")
+      setLeftStyle("left-nav-container-no-show")
+      console.log("noshow")
+    }
+    else{
+      setHomeStyle("home-page-container")
+      setLeftStyle("left-nav-container")
+      console.log("show")
+    }
+  }, [dispatch, showLeftNavigationBar]);
 
   useEffect(() => {
     setEventInThisPeriod(getEventsInThisPeriod(myEvents, currentDate.utc()));
@@ -45,36 +65,44 @@ const HomePage = () => {
       }
     }
     setMyEvents(newMyEvents);
-  }, [allEvents, rsvpChange,eventsHostedByMe]);
+  }, [allEvents, rsvpChange, eventsHostedByMe]);
   return (
-    <div className="home-page-container">
-      <div className="left-nav-container">
+    <div className={homeStyle}>
+      <div className={leftStyle}>
         <CreateEventButton />
-        <div className="switch-month">
-          <div className="mini-board-month">
-            {monthName[currentDate.month()]}
-            {currentDate.year()}
+        <div className="">
+          <div className="switch-month">
+            <div className="mini-board-month">
+              {monthName[currentDate.month()]}
+              {currentDate.year()}
+            </div>
+            <div className="mini-board-arrow">
+              <MdArrowBackIos
+                className="arrow"
+                onClick={() =>
+                  setCurrentDate(dayjs(currentDate).subtract(1, "month"))
+                }
+              />
+              <MdArrowForwardIos
+                className="arrow"
+                onClick={() =>
+                  setCurrentDate(dayjs(currentDate).add(1, "month"))
+                }
+              />
+            </div>
           </div>
-          <div className="mini-board-arrow">
-            <MdArrowBackIos
-              onClick={() =>
-                setCurrentDate(dayjs(currentDate).subtract(1, "month"))
-              }
-            />
-            <MdArrowForwardIos
-              onClick={() => setCurrentDate(dayjs(currentDate).add(1, "month"))}
-            />
-          </div>
+          <MiniMonthBoard />
         </div>
-        <MiniMonthBoard />
         <MyCalendars />
         <div
           className="my-rsvps-button"
           onClick={() => setShowMyRsvps(!showMyRsvps)}
         >
-          My rsvps
+          My RSVPs
+          <IoChevronForward />
         </div>
       </div>
+
       <div className="main-container">
         {!showMyRsvps && <MonthBoard eventsInThisPeriod={eventsInThisPeriod} />}
         {showMyRsvps && <MyRsvpsList />}
