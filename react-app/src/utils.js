@@ -28,20 +28,20 @@ export const monthName = [
 ];
 
 
-
+ 
 export const buildMonthFrame = (date = new Date()) => {
   const firstDateInMonth = dayjs(date).startOf("month");
   const firstDateCurrentPeriod = firstDateInMonth.subtract(
-    firstDateInMonth.day(),
+    firstDateInMonth.day(),//0-6
     "day"
   );
 
   const monthFrame = new Array(6);
-  let runner = firstDateCurrentPeriod;
+  let runner = firstDateCurrentPeriod;//10/26th
   for (let i = 0; i < 6; i++) {
-    monthFrame[i] = [];
+    monthFrame[i] = [];//a week
     for (let j = 0; j < 7; j++) {
-      monthFrame[i].push(runner);
+      monthFrame[i].push(runner);//add day to a week
       runner = runner.add(1, "day");
     }
   }
