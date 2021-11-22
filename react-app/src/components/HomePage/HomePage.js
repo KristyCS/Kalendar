@@ -3,6 +3,7 @@ import MonthBoard from "../MonthBoard/MonthBoard";
 import "./HomePage.css";
 import MyCalendars from "../MyCalendars/MyCalendars";
 import CreateEventButton from "../CreateEventButton/CreateEventButton";
+import { useLeftNavigationBarContext } from "../../context/LeftNavigationBar";
 import { useCurrentDateContext } from "../../context/CurrentDate";
 import { getEventsByUserId, getAllEvents } from "../../store/event";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,12 +17,14 @@ const HomePage = () => {
   const user = useSelector((state) => state.session.user);
   const eventsHostedByMe = useSelector((state) => state.event.eventsHostedByMe);
   const allEvents = useSelector((state) => state.event.allEvents);
+  const {showLeftNavigationBar, setShowLeftNavigationBar} =useLeftNavigationBarContext()
   const [myEvents, setMyEvents] = useState([]);
   const [eventsInThisPeriod, setEventInThisPeriod] = useState([]);
   const dispatch = useDispatch();
   const { rsvpChange, setRsvpChange } = useRsvpChangeContext();
   const { currentDate, setCurrentDate } = useCurrentDateContext();
   const [showMyRsvps, setShowMyRsvps] = useState(false);
+  const [hideSideBar,setHideSideBar] = useState(showLeftNavigationBar);
   useEffect(async () => {
     await dispatch(getEventsByUserId(user.id));
     await dispatch(getAllEvents());
@@ -45,36 +48,40 @@ const HomePage = () => {
       }
     }
     setMyEvents(newMyEvents);
-  }, [allEvents, rsvpChange,eventsHostedByMe]);
+  }, [allEvents, rsvpChange, eventsHostedByMe]);
   return (
     <div className="home-page-container">
-      <div className="left-nav-container">
-        <CreateEventButton />
-        <div className="switch-month">
-          <div className="mini-board-month">
-            {monthName[currentDate.month()]}
-            {currentDate.year()}
+      {!hideSideBar && (
+        <div className="left-nav-container">
+          <CreateEventButton />
+          <div className="switch-month">
+            <div className="mini-board-month">
+              {monthName[currentDate.month()]}
+              {currentDate.year()}
+            </div>
+            <div className="mini-board-arrow">
+              <MdArrowBackIos
+                onClick={() =>
+                  setCurrentDate(dayjs(currentDate).subtract(1, "month"))
+                }
+              />
+              <MdArrowForwardIos
+                onClick={() =>
+                  setCurrentDate(dayjs(currentDate).add(1, "month"))
+                }
+              />
+            </div>
           </div>
-          <div className="mini-board-arrow">
-            <MdArrowBackIos
-              onClick={() =>
-                setCurrentDate(dayjs(currentDate).subtract(1, "month"))
-              }
-            />
-            <MdArrowForwardIos
-              onClick={() => setCurrentDate(dayjs(currentDate).add(1, "month"))}
-            />
+          <MiniMonthBoard />
+          <MyCalendars />
+          <div
+            className="my-rsvps-button"
+            onClick={() => setShowMyRsvps(!showMyRsvps)}
+          >
+            My rsvps
           </div>
         </div>
-        <MiniMonthBoard />
-        <MyCalendars />
-        <div
-          className="my-rsvps-button"
-          onClick={() => setShowMyRsvps(!showMyRsvps)}
-        >
-          My rsvps
-        </div>
-      </div>
+      )}
       <div className="main-container">
         {!showMyRsvps && <MonthBoard eventsInThisPeriod={eventsInThisPeriod} />}
         {showMyRsvps && <MyRsvpsList />}
