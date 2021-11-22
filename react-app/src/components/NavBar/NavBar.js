@@ -12,16 +12,12 @@ import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 const dayjs = require("dayjs");
 const NavBar = () => {
-  const { setShowLeftNavigationBar } = useLeftNavigationBarContext();
+  const { showLeftNavigationBar, setShowLeftNavigationBar } = useLeftNavigationBarContext();
   const user = useSelector((state) => state.session.user);
-  localStorage.setItem("hideSideBar", false);
-  setShowLeftNavigationBar(false);
   const { currentDate, setCurrentDate, setMiniBoardMarker } =
     useCurrentDateContext();
   const hideSideBarHandler = () => {
-    const hideSideBar = localStorage.getItem("hideSideBar");
-    setShowLeftNavigationBar("hideSideBar");
-    localStorage.setItem("hideSideBar", !hideSideBar);
+    setShowLeftNavigationBar(!showLeftNavigationBar);
   };
   return (
     <nav>

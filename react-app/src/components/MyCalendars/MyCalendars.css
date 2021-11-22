@@ -4,6 +4,9 @@
   padding: 4px;
   justify-content: flex-start;
   gap: 30px;
+  border-radius: 5px;
+  transform: 0.3s;
+  align-items: center;
 }
 .check-con {
   display: flex;
@@ -64,4 +67,10 @@
 
 .my-calendars-head:active {
   background-color: rgb(219, 219, 221);
+}
+
+.my-calendars-container{
+  display:flex;
+  flex-direction: column;
+  gap:10px;
 }

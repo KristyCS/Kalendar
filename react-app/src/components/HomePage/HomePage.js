@@ -1,6 +1,7 @@
 import MiniMonthBoard from "../MiniMonthBoard/MiniMonthBoard";
 import MonthBoard from "../MonthBoard/MonthBoard";
 import "./HomePage.css";
+import { IoChevronForward } from "react-icons/io5";
 import MyCalendars from "../MyCalendars/MyCalendars";
 import CreateEventButton from "../CreateEventButton/CreateEventButton";
 import { useLeftNavigationBarContext } from "../../context/LeftNavigationBar";
@@ -17,14 +18,14 @@ const HomePage = () => {
   const user = useSelector((state) => state.session.user);
   const eventsHostedByMe = useSelector((state) => state.event.eventsHostedByMe);
   const allEvents = useSelector((state) => state.event.allEvents);
-  const {showLeftNavigationBar, setShowLeftNavigationBar} =useLeftNavigationBarContext()
+  const { showLeftNavigationBar, setShowLeftNavigationBar } =
+    useLeftNavigationBarContext();
   const [myEvents, setMyEvents] = useState([]);
   const [eventsInThisPeriod, setEventInThisPeriod] = useState([]);
   const dispatch = useDispatch();
   const { rsvpChange, setRsvpChange } = useRsvpChangeContext();
   const { currentDate, setCurrentDate } = useCurrentDateContext();
   const [showMyRsvps, setShowMyRsvps] = useState(false);
-  const [hideSideBar,setHideSideBar] = useState(showLeftNavigationBar);
   useEffect(async () => {
     await dispatch(getEventsByUserId(user.id));
     await dispatch(getAllEvents());
@@ -50,10 +51,10 @@ const HomePage = () => {
     setMyEvents(newMyEvents);
   }, [allEvents, rsvpChange, eventsHostedByMe]);
   return (
-    <div className="home-page-container">
-      {!hideSideBar && (
-        <div className="left-nav-container">
-          <CreateEventButton />
+    <div className={showLeftNavigationBar ? "home-page-container":"home-page-container-no-show"}>
+      <div className={showLeftNavigationBar ? "left-nav-container" : "left-nav-container-no-show"}>
+        <CreateEventButton />
+        <div className="">
           <div className="switch-month">
             <div className="mini-board-month">
               {monthName[currentDate.month()]}
@@ -61,11 +62,13 @@ const HomePage = () => {
             </div>
             <div className="mini-board-arrow">
               <MdArrowBackIos
+                className="arrow"
                 onClick={() =>
                   setCurrentDate(dayjs(currentDate).subtract(1, "month"))
                 }
               />
               <MdArrowForwardIos
+                className="arrow"
                 onClick={() =>
                   setCurrentDate(dayjs(currentDate).add(1, "month"))
                 }
@@ -73,15 +76,17 @@ const HomePage = () => {
             </div>
           </div>
           <MiniMonthBoard />
-          <MyCalendars />
-          <div
-            className="my-rsvps-button"
-            onClick={() => setShowMyRsvps(!showMyRsvps)}
-          >
-            My rsvps
-          </div>
         </div>
-      )}
+        <MyCalendars />
+        <div
+          className="my-rsvps-button"
+          onClick={() => setShowMyRsvps(!showMyRsvps)}
+        >
+          My RSVPs
+          <IoChevronForward />
+        </div>
+      </div>
+
       <div className="main-container">
         {!showMyRsvps && <MonthBoard eventsInThisPeriod={eventsInThisPeriod} />}
         {showMyRsvps && <MyRsvpsList />}
