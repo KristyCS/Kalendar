@@ -19,14 +19,7 @@ const MonthBoard = ({ eventsInThisPeriod }) => {
   const { currentDate } = useCurrentDateContext();
   const [showEditEventModal, setShowEditEventModal] = useState(false);
   const [labelSet, setLabelSet] = useState(new Set());
-  const {
-    checkFamily,
-    setCheckFamily,
-    checkWork,
-    setCheckWork,
-    checkOther,
-    setCheckOther,
-  } = useEventLabelContext();
+  const { checkFamily, checkWork, checkOther } = useEventLabelContext();
   useEffect(() => {
     setMonthFrame(buildMonthFrame(currentDate));
   }, [currentDate]);

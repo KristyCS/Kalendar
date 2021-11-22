@@ -1,6 +1,6 @@
-import { createRsvp } from "./rsvp";
 const SET_MYEVENTS = "SET_MYEVENTS";
 const ADD_EVENT = "ADD_EVENT";
+const UPDATE_EVENT = "UPDATE_EVENT;";
 const SET_ALLEVENTS = "SET_ALLEVENTS";
 const setMyEvents = (events) => ({
   type: SET_MYEVENTS,
@@ -9,6 +9,11 @@ const setMyEvents = (events) => ({
 
 const addEvent = (event) => ({
   type: ADD_EVENT,
+  event,
+});
+
+const updateEvent = (event) => ({
+  type: UPDATE_EVENT,
   event,
 });
 
@@ -33,7 +38,7 @@ export const editEvent =
   }) =>
   async (dispatch) => {
     const formData = new FormData();
-    formData.append("id", id)
+    formData.append("id", id);
     formData.append("host_id", host_id);
     formData.append("theme", theme);
     formData.append("description", description);
@@ -50,10 +55,41 @@ export const editEvent =
     });
     if (response.ok) {
       const event = await response.json();
-      dispatch(addEvent(event));
-      for (const participant of participants) {
-        dispatch(createRsvp({ user_id: participant, event_id: event.id }));
+
+      let rsvps = await fetch(`/api/rsvps/event/${event.id}`);
+      rsvps = await rsvps.json();
+      rsvps = Object.values(rsvps);
+      for (const rsvp of rsvps) {
+        if (!participants.includes(rsvp.user_id)) {
+          await fetch(`/api/rsvps/${rsvp.id}`, { method: "DELETE" });
+        }
       }
+      console.log(participants,"!@!@!@!@!@!@!@!@!!@?participants")
+      for (const participant of participants) {
+        let rsvp = await fetch(
+          `/api/rsvps/event/${event.id}/user/${participant}`
+        );
+        rsvp = await rsvp.json();
+        
+        if (Object.values(rsvp).length==0) {
+          
+          await fetch("/api/rsvps", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              user_id: participant,
+              event_id: event.id,
+              status: "no rsp",
+            }),
+          });
+        }
+      }
+      const res = await fetch(`/api/rsvps/event/${event.id}`);
+      const data = await res.json();
+      event.rsvps = Object.values(data);
+      dispatch(addEvent(event));
       return null;
     } else if (response.status < 500) {
       const data = await response.json();
@@ -96,10 +132,23 @@ export const createEvent =
     });
     if (response.ok) {
       const event = await response.json();
-      dispatch(addEvent(event));
       for (const participant of participants) {
-        dispatch(createRsvp({ user_id: participant, event_id: event.id }));
+        await fetch("/api/rsvps", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            user_id: participant,
+            event_id: event.id,
+            status: "no rsp",
+          }),
+        });
       }
+      const res = await fetch(`/api/rsvps/event/${event.id}`);
+      const data = await res.json();
+      event.rsvps = Object.values(data);
+      dispatch(addEvent(event));
       return null;
     } else if (response.status < 500) {
       const data = await response.json();
@@ -126,6 +175,32 @@ export const getEventsByUserId = (userId) => async (dispatch) => {
     return ["An error occurred. Please try again."];
   }
 };
+const createRsvp =
+  ({ user_id, event_id }) =>
+  async () => {
+    const response = await fetch("/api/rsvps", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: parseInt(user_id),
+        event_id,
+        status: "no rsp",
+      }),
+    });
+    if (response.ok) {
+      const rsvp = await response.json();
+      return null;
+    } else if (response.status < 500) {
+      const data = await response.json();
+      if (data.errors) {
+        return data.errors;
+      }
+    } else {
+      return ["An error occurred. Please try again."];
+    }
+  };
 
 export const getAllEvents = () => async (dispatch) => {
   const response = await fetch(`/api/events`);

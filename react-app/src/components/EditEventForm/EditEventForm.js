@@ -50,6 +50,7 @@ export default function EditEventForm({ setShowEditEventModal, event }) {
       newParticipants.push({ value: rsvp.user.id, label: rsvp.user.username });
     }
     setParticipants(newParticipants);
+    console.log(newParticipants,"Beginning!!!!!!!")
   }, []);
   const options = [];
   for (const u of allUsers) {
@@ -86,6 +87,7 @@ export default function EditEventForm({ setShowEditEventModal, event }) {
         ":00"
       ),
     };
+    console.log(participantArray,"Done")
     const data = await dispatch(editEvent(newEvent));
     if (data) {
       setErrors(data);
