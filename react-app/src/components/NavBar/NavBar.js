@@ -18,6 +18,7 @@ const NavBar = () => {
     useCurrentDateContext();
   const hideSideBarHandler = () => {
     setShowLeftNavigationBar(!showLeftNavigationBar);
+    localStorage.setItem("hideNav",!showLeftNavigationBar)
   };
   return (
     <nav>

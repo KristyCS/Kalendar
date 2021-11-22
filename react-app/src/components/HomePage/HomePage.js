@@ -18,8 +18,11 @@ const HomePage = () => {
   const user = useSelector((state) => state.session.user);
   const eventsHostedByMe = useSelector((state) => state.event.eventsHostedByMe);
   const allEvents = useSelector((state) => state.event.allEvents);
+  const [leftStyle, setLeftStyle] = useState("left-nav-container");
+  const [homeStyle, setHomeStyle] = useState("home-page-container");
   const { showLeftNavigationBar, setShowLeftNavigationBar } =
     useLeftNavigationBarContext();
+  const [hideSide, setHideSide] = useState(localStorage.getItem("hideNav"));
   const [myEvents, setMyEvents] = useState([]);
   const [eventsInThisPeriod, setEventInThisPeriod] = useState([]);
   const dispatch = useDispatch();
@@ -29,7 +32,20 @@ const HomePage = () => {
   useEffect(async () => {
     await dispatch(getEventsByUserId(user.id));
     await dispatch(getAllEvents());
-  }, [dispatch]);
+    const a = localStorage.getItem("hideNav")
+    console.log(a)
+    setHideSide(a);
+    if(a==="true"){
+      setHomeStyle("home-page-container-no-show")
+      setLeftStyle("left-nav-container-no-show")
+      console.log("noshow")
+    }
+    else{
+      setHomeStyle("home-page-container")
+      setLeftStyle("left-nav-container")
+      console.log("show")
+    }
+  }, [dispatch, showLeftNavigationBar]);
 
   useEffect(() => {
     setEventInThisPeriod(getEventsInThisPeriod(myEvents, currentDate.utc()));
@@ -51,8 +67,8 @@ const HomePage = () => {
     setMyEvents(newMyEvents);
   }, [allEvents, rsvpChange, eventsHostedByMe]);
   return (
-    <div className={showLeftNavigationBar ? "home-page-container":"home-page-container-no-show"}>
-      <div className={showLeftNavigationBar ? "left-nav-container" : "left-nav-container-no-show"}>
+    <div className={homeStyle}>
+      <div className={leftStyle}>
         <CreateEventButton />
         <div className="">
           <div className="switch-month">
