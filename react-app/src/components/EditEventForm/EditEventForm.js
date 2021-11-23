@@ -3,7 +3,7 @@ import "./EditEventForm.css";
 import Select from "react-select";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-import { dayjs } from "../../utils";
+import { dayjs,minutesFormat } from "../../utils";
 import { useCurrentDateContext } from "../../context/CurrentDate";
 import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
@@ -36,11 +36,9 @@ export default function EditEventForm({ setShowEditEventModal, event }) {
   const dispatch = useDispatch();
   useEffect(() => {
     setStartDate(new Date(startDate.getTime() + 5*60*60000))
-    setStartTime(new Date(startDate.getTime() + 5*60*60000).getHours().toString()+":"+new Date(startDate.getTime() + 5*60*60000).getMinutes().toString())
+    setStartTime(new Date(startDate.getTime() + 5*60*60000).getHours().toString()+":"+minutesFormat(new Date(startDate.getTime() + 5*60*60000).getMinutes()))
     setEndDate(new Date(endDate.getTime() + 5*60*60000))
-    setEndTime(new Date(endDate.getTime() + 5*60*60000).getHours().toString()+":"+new Date(endDate.getTime() + 5*60*60000).getMinutes().toString())
-    console.log(new Date(startDate.getTime() + 5*60*60000).getHours().toString()+":"+new Date(startDate.getTime() + 5*60*60000).getMinutes().toString(),"#######")
-    console.log(startTime,"$$$$$$$")
+    setEndTime(new Date(endDate.getTime() + 5*60*60000).getHours().toString()+":"+minutesFormat(new Date(endDate.getTime() + 5*60*60000).getMinutes()))
     async function fetchData() {
       const response = await fetch("/api/users/");
       const responseData = await response.json();
@@ -130,7 +128,7 @@ export default function EditEventForm({ setShowEditEventModal, event }) {
         <div className="start-time">
           <TimePicker
             closeClock={false}
-            selected={startTime}
+            // selected={startTime}
             value={startTime}
             onChange={(value) => {
               setStartTime(value);

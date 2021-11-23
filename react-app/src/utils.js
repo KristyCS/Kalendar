@@ -3,6 +3,10 @@ export let  dayjs = require("dayjs");
 const isBetween = require("dayjs/plugin/isBetween");
 dayjs.extend(isBetween);
 dayjs.extend(customParseFormat)
+
+export const minutesFormat=(minutes)=>{
+  return minutes<10? "0".concat(minutes.toString()):minutes.toString()
+}
 export const dayName = [
   "Sunday",
   "Monday",

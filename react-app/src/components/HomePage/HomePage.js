@@ -36,17 +36,15 @@ const HomePage = () => {
     await dispatch(getEventsByUserId(user.id));
     await dispatch(getAllEvents());
     const a = localStorage.getItem("hideNav")
-    console.log(a)
     setHideSide(a);
     if(a==="true"){
       setHomeStyle("home-page-container-no-show")
       setLeftStyle("left-nav-container-no-show")
-      console.log("noshow")
+     
     }
     else{
       setHomeStyle("home-page-container")
       setLeftStyle("left-nav-container")
-      console.log("show")
     }
   }, [dispatch, showLeftNavigationBar]);
 
