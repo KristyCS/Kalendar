@@ -26,82 +26,23 @@
   - [AWS Storage](https://aws.amazon.com/?nc2=h_lg)
 
 
+## How to run Kalendar on your local?
+ 
+* PostgreSQL
+* Pipenv with Python v3.94
+* Node.js
 
-
-
-1. Before you deploy, don't forget to run the following command in order to
-ensure that your production environment has all of your up-to-date
-dependencies. You only have to run this command when you have installed new
-Python packages since your last deployment, but if you aren't sure, it won't
-hurt to run it again.
-
-   ```bash
-   pipenv lock -r > requirements.txt
-   ```
-
-2. Create a new project on Heroku
-3. Under Resources click "Find more add-ons" and add the add on called "Heroku Postgres"
-4. Install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-command-line)
-5. Run
-
-   ```bash
-   heroku login
-   ```
-
-6. Login to the heroku container registry
-
-   ```bash
-   heroku container:login
-   ```
-
-7. Update the `REACT_APP_BASE_URL` variable in the Dockerfile.
-   This should be the full URL of your Heroku app: i.e. "https://flask-react-aa.herokuapp.com"
-8. Push your docker container to heroku from the root directory of your project.
-   (If you are using an M1 mac, follow [these steps below](#for-m1-mac-users) instead, then continue on to step 9.)
-   This will build the Dockerfile and push the image to your heroku container registry.
-
-   ```bash
-   heroku container:push web -a {NAME_OF_HEROKU_APP}
-   ```
-
-9. Release your docker container to heroku
-
-      ```bash
-      heroku container:release web -a {NAME_OF_HEROKU_APP}
-      ```
-
-10. set up your database
-
-      ```bash
-      heroku run -a {NAME_OF_HEROKU_APP} flask db upgrade
-      heroku run -a {NAME_OF_HEROKU_APP} flask seed all
-      ```
-
-11. Under Settings find "Config Vars" and add any additional/secret .env
-variables.
-
-12. profit
-
-### For M1 Mac users
-
-(Replaces **Step 8**)
-
-1. Build image with linux platform for heroku servers. Replace
-{NAME_OF_HEROKU_APP} with your own tag:
-
-   ```bash=
-   docker buildx build --platform linux/amd64 -t {NAME_OF_HEROKU_APP} .
-   ```
-
-2. Tag your app with the url for your apps registry. Make sure to use the name
-of your Heroku app in the url and tag name:
-
-   ```bash=2
-   docker tag {NAME_OF_HEROKU_APP} registry.heroku.com/{NAME_OF_HEROKU_APP}/web
-   ```
-
-3. Use docker to push the image to the Heroku container registry:
-
-   ```bash=3
-   docker push registry.heroku.com/{NAME_OF_HEROKU_APP}/web
-   ```
+1. `git clone` this repo
+2. `cd` into the local repo
+3. Run `pipenv install -r --dev dev-requirements.txt && pipenv install -r requirements.txt`
+4. Create your own `.env` file based on the provided `.env.example`.
+5. Create a user and database in your PostgreSQL that matches your `.env` configuration
+6. In the first terminal, run `pipenv shell` to activate the Pipenv environment.
+7. Run `flask db upgrade` and then `flask seed all` to apply migrations and seed data to your database.'
+8. Run `flask run` to start flask server.
+9. Open another terminal window and `cd` into the local repo, then `cd` into `react-app`
+10. Run `npm install`
+11. In your terminal running Pipenv shell, run `flask run`.
+12. In your terminal in the `react-app`, run `npm start`.
+13. Your app should open in your default browser.
+14. If you are planning on developing, please make a fork and create pull requests as necessary.
