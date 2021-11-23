@@ -1,6 +1,7 @@
 import MiniMonthBoard from "../MiniMonthBoard/MiniMonthBoard";
 import MonthBoard from "../MonthBoard/MonthBoard";
 import "./HomePage.css";
+import { NavLink } from "react-router-dom";
 import { IoChevronForward } from "react-icons/io5";
 import MyCalendars from "../MyCalendars/MyCalendars";
 import CreateEventButton from "../CreateEventButton/CreateEventButton";
@@ -14,18 +15,26 @@ import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
 import { monthName } from "../../utils";
 import { useRsvpChangeContext } from "../../context/rsvpUpdate";
 import MyRsvpsList from "../MyRsvpsList/MyRsvpsList";
+
 const HomePage = () => {
   const user = useSelector((state) => state.session.user);
   const eventsHostedByMe = useSelector((state) => state.event.eventsHostedByMe);
   const allEvents = useSelector((state) => state.event.allEvents);
   const [hideSide, setHideSide] = useState(localStorage.getItem("hideNav"));
-  const [leftStyle, setLeftStyle] = useState(hideSide==="true"?"home-page-container-no-show":"home-page-container-no-show");
-  const [homeStyle, setHomeStyle] = useState(hideSide==="true"?"left-nav-container-no-show":"left-nav-container-no-show");
- 
+  const [leftStyle, setLeftStyle] = useState(
+    hideSide === "true"
+      ? "home-page-container-no-show"
+      : "home-page-container-no-show"
+  );
+  const [homeStyle, setHomeStyle] = useState(
+    hideSide === "true"
+      ? "left-nav-container-no-show"
+      : "left-nav-container-no-show"
+  );
 
   const { showLeftNavigationBar, setShowLeftNavigationBar } =
     useLeftNavigationBarContext();
- 
+
   const [myEvents, setMyEvents] = useState([]);
   const [eventsInThisPeriod, setEventInThisPeriod] = useState([]);
   const dispatch = useDispatch();
@@ -35,16 +44,14 @@ const HomePage = () => {
   useEffect(async () => {
     await dispatch(getEventsByUserId(user.id));
     await dispatch(getAllEvents());
-    const a = localStorage.getItem("hideNav")
+    const a = localStorage.getItem("hideNav");
     setHideSide(a);
-    if(a==="true"){
-      setHomeStyle("home-page-container-no-show")
-      setLeftStyle("left-nav-container-no-show")
-     
-    }
-    else{
-      setHomeStyle("home-page-container")
-      setLeftStyle("left-nav-container")
+    if (a === "true") {
+      setHomeStyle("home-page-container-no-show");
+      setLeftStyle("left-nav-container-no-show");
+    } else {
+      setHomeStyle("home-page-container");
+      setLeftStyle("left-nav-container");
     }
   }, [dispatch, showLeftNavigationBar]);
 
@@ -67,9 +74,9 @@ const HomePage = () => {
     }
     setMyEvents(newMyEvents);
   }, [allEvents, rsvpChange, eventsHostedByMe]);
-  useEffect(()=>{
-    localStorage.setItem("showMyRsvps",showMyRsvps)
-  },[showMyRsvps])
+  useEffect(() => {
+    localStorage.setItem("showMyRsvps", showMyRsvps);
+  }, [showMyRsvps]);
   return (
     <div className={homeStyle}>
       <div className={leftStyle}>
@@ -98,18 +105,27 @@ const HomePage = () => {
           <MiniMonthBoard />
         </div>
         <MyCalendars />
-        <div
+        {/* <div
           className="my-rsvps-button"
           onClick={() => setShowMyRsvps(!showMyRsvps)}
         >
           My RSVPs
           <IoChevronForward />
-        </div>
+        </div> */}
+        <NavLink className="my-rsvps-button" to="/myrsvps">
+          My RSVPs
+          <IoChevronForward />
+        </NavLink>
       </div>
 
       <div className="main-container">
         {!showMyRsvps && <MonthBoard eventsInThisPeriod={eventsInThisPeriod} />}
-        {showMyRsvps && <MyRsvpsList showMyRsvps={showMyRsvps} setShowMyRsvps={setShowMyRsvps} />}
+        {showMyRsvps && (
+          <MyRsvpsList
+            showMyRsvps={showMyRsvps}
+            setShowMyRsvps={setShowMyRsvps}
+          />
+        )}
       </div>
     </div>
   );
