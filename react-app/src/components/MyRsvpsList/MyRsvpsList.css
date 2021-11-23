@@ -7,5 +7,7 @@
 }
 
 .back{
-    align-content: flex-start;
+    display: flex;
+    
+    
 }

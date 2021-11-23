@@ -1,60 +1,33 @@
-# Flask React Project
+# Kalendar
 
-This is the starter for the Flask React project.
+## What is Kalendar?
+   > Kalendar is digital calendar. Authoried user can create event, edit event, invite other users, reply invitation and view schdules on Kalendar.
 
-## Getting started
+<img width="1438" alt="Screen Shot 2021-11-23 at 10 35 01 AM" src="https://user-images.githubusercontent.com/3848107/143056745-dd537f9a-712c-49c1-ab8d-e140646c4a24.png">
 
-1. Clone this repository (only this branch)
 
-   ```bash
-   git clone https://github.com/appacademy-starters/python-project-starter.git
-   ```
+## Live Links
 
-2. Install dependencies
 
-      ```bash
-      pipenv install --dev -r dev-requirements.txt && pipenv install -r requirements.txt
-      ```
+1. [Live Link](https://kalendar-aa.herokuapp.com) 
 
-3. Create a **.env** file based on the example with proper settings for your
-   development environment
-4. Setup your PostgreSQL user, password and database and make sure it matches your **.env** file
+2. [Feature List](https://github.com/KristyCS/Kalendar/wiki/Feature-List)
 
-5. Get into your pipenv, migrate your database, seed your database, and run your flask app
+## Technologies
 
-   ```bash
-   pipenv shell
-   ```
+  - React.js
+  - Redux
+  - JavaScript
+  - Python
+  - Flask
+  - SQLALchemy
+  - [OpenCageData](https://opencagedata.com)
+  - [GoogleMap](https://developers.google.com/maps)
+  - [AWS Storage](https://aws.amazon.com/?nc2=h_lg)
 
-   ```bash
-   flask db upgrade
-   ```
 
-   ```bash
-   flask seed all
-   ```
 
-   ```bash
-   flask run
-   ```
 
-6. To run the React App in development, checkout the [README](./react-app/README.md) inside the `react-app` directory.
-
-***
-*IMPORTANT!*
-   If you add any python dependencies to your pipfiles, you'll need to regenerate your requirements.txt before deployment.
-   You can do this by running:
-
-   ```bash
-   pipenv lock -r > requirements.txt
-   ```
-
-*ALSO IMPORTANT!*
-   psycopg2-binary MUST remain a dev dependency because you can't install it on apline-linux.
-   There is a layer in the Dockerfile that will install psycopg2 (not binary) for us.
-***
-
-## Deploy to Heroku
 
 1. Before you deploy, don't forget to run the following command in order to
 ensure that your production environment has all of your up-to-date
