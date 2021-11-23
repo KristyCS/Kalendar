@@ -2,10 +2,11 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import session from './session'
 import event from './event'
-
+import map from './map'
 const rootReducer = combineReducers({
   session,
   event,
+  map,
 });
 
 
