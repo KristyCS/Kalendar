@@ -1,5 +1,6 @@
 import os
 from flask import Flask, render_template, request, session, redirect
+from flask.typing import ResponseValue
 from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect, generate_csrf
@@ -10,7 +11,9 @@ from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
 from .api.event_routes import event_routes
 from .api.rsvp_routes import rsvp_routes
+from .api.map_routes import map_routes
 from .seeds import seed_commands
+
 from .config import Config
 
 app = Flask(__name__)
@@ -33,6 +36,7 @@ app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(event_routes, url_prefix='/api/events')
 app.register_blueprint(rsvp_routes, url_prefix='/api/rsvps')
+app.register_blueprint(map_routes, url_prefix='/api/map')
 db.init_app(app)
 Migrate(app, db)
 

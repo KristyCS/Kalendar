@@ -1,3 +1,15 @@
-.event-container{
-    width:800px;
+.event-container {
+    width: 800px;
+   display:grid;
+   grid-template-columns: 1fr 1fr;
+}
+.event-info {
+ 
+  padding: 10px;
+}
+
+.theme {
+  font-size: 30px;
+}
+.date-detail {
 }

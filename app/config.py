@@ -16,3 +16,4 @@ class Config:
     S3_KEY = os.environ.get("S3_ACCESS_KEY")
     S3_SECRET = os.environ.get("S3_SECRET_ACCESS_KEY")
     S3_LOCATION = f"http://{S3_BUCKET}.s3.amazonaws.com/"
+    GOOGLE_MAP_KEY = os.environ.get('GOOGLE_MAP_KEY')
