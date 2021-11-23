@@ -18,11 +18,14 @@ const HomePage = () => {
   const user = useSelector((state) => state.session.user);
   const eventsHostedByMe = useSelector((state) => state.event.eventsHostedByMe);
   const allEvents = useSelector((state) => state.event.allEvents);
-  const [leftStyle, setLeftStyle] = useState("left-nav-container");
-  const [homeStyle, setHomeStyle] = useState("home-page-container");
+  const [hideSide, setHideSide] = useState(localStorage.getItem("hideNav"));
+  const [leftStyle, setLeftStyle] = useState(hideSide==="true"?"home-page-container-no-show":"home-page-container-no-show");
+  const [homeStyle, setHomeStyle] = useState(hideSide==="true"?"left-nav-container-no-show":"left-nav-container-no-show");
+ 
+
   const { showLeftNavigationBar, setShowLeftNavigationBar } =
     useLeftNavigationBarContext();
-  const [hideSide, setHideSide] = useState(localStorage.getItem("hideNav"));
+ 
   const [myEvents, setMyEvents] = useState([]);
   const [eventsInThisPeriod, setEventInThisPeriod] = useState([]);
   const dispatch = useDispatch();
