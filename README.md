@@ -6,17 +6,9 @@
 ## Live Links
 
 
-1.  [Live Link](https://kalendar-aa.herokuapp.com) 
+1. [Live Link](https://kalendar-aa.herokuapp.com) 
 
-   ```bash
-   git clone https://github.com/appacademy-starters/python-project-starter.git
-   ```
-
-2. Install dependencies
-
-      ```bash
-      pipenv install --dev -r dev-requirements.txt && pipenv install -r requirements.txt
-      ```
+2. [Feature List](https://github.com/KristyCS/Kalendar/wiki/Feature-List)
 
 3. Create a **.env** file based on the example with proper settings for your
    development environment
