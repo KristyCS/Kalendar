@@ -1,5 +1,8 @@
 # Kalendar
 
+## What is Kalendar?
+   > Kalendar is digital calendar. Authoried user can create event, edit event, invite other users, reply invitation and view schdules on Kalendar.
+
 <img width="1438" alt="Screen Shot 2021-11-23 at 10 35 01 AM" src="https://user-images.githubusercontent.com/3848107/143056745-dd537f9a-712c-49c1-ab8d-e140646c4a24.png">
 
 
