@@ -1,7 +1,8 @@
 const SET_MYEVENTS = "SET_MYEVENTS";
 const ADD_EVENT = "ADD_EVENT";
-const UPDATE_EVENT = "UPDATE_EVENT;";
+const UPDATE_EVENT = "UPDATE_EVENT";
 const SET_ALLEVENTS = "SET_ALLEVENTS";
+const DELETE_EVENT = "DELETE_EVENT";
 const setMyEvents = (events) => ({
   type: SET_MYEVENTS,
   events,
@@ -21,6 +22,29 @@ const setAllEvents = (events) => ({
   type: SET_ALLEVENTS,
   events,
 });
+
+const removeEvent = (eventId) => ({
+  type: DELETE_EVENT,
+  eventId,
+});
+
+export const deleteEvent = (eventId) => async (dispatch) => {
+  const response = await fetch(`/api/events/${eventId}`, {
+    method: "DELETE",
+  });
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(removeEvent(data.id));
+    return null;
+  } else if (response.status < 500) {
+    const data = await response.json();
+    if (data.errors) {
+      return data.errors;
+    }
+  } else {
+    return ["An error occurred. Please try again."];
+  }
+};
 
 export const editEvent =
   ({
@@ -69,9 +93,8 @@ export const editEvent =
           `/api/rsvps/event/${event.id}/user/${participant}`
         );
         rsvp = await rsvp.json();
-        
-        if (Object.values(rsvp).length==0) {
-          
+
+        if (Object.values(rsvp).length == 0) {
           await fetch("/api/rsvps", {
             method: "POST",
             headers: {
@@ -226,6 +249,12 @@ export default function reducer(
       return { ...state, allEvents: action.events };
     case SET_MYEVENTS:
       return { ...state, eventsHostedByMe: action.events };
+    case DELETE_EVENT:
+      const newEventsHostedByMe = { ...state.eventsHostedByMe };
+      delete newEventsHostedByMe[action.eventId];
+      const newAllEvents = { ...state.allEvents };
+      delete newAllEvents[action.eventId];
+      return { allEvents: newAllEvents, eventsHostedByMe: newEventsHostedByMe };
     case ADD_EVENT:
       return {
         allEvents: { ...state.allEvents, [action.event.id]: action.event },
