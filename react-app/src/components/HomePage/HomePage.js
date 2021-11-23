@@ -67,6 +67,9 @@ const HomePage = () => {
     }
     setMyEvents(newMyEvents);
   }, [allEvents, rsvpChange, eventsHostedByMe]);
+  useEffect(()=>{
+    localStorage.setItem("showMyRsvps",showMyRsvps)
+  },[showMyRsvps])
   return (
     <div className={homeStyle}>
       <div className={leftStyle}>
@@ -106,7 +109,7 @@ const HomePage = () => {
 
       <div className="main-container">
         {!showMyRsvps && <MonthBoard eventsInThisPeriod={eventsInThisPeriod} />}
-        {showMyRsvps && <MyRsvpsList />}
+        {showMyRsvps && <MyRsvpsList showMyRsvps={showMyRsvps} setShowMyRsvps={setShowMyRsvps} />}
       </div>
     </div>
   );
