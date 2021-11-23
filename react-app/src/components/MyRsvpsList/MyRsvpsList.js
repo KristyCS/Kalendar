@@ -3,6 +3,9 @@ import "./MyRsvpsList.css";
 import { useSelector } from "react-redux";
 import SingleRsvp from "../SingleRsvp/SingleRsvp";
 export default function MyRsvpsList() {
+  // useEffect(async () => {
+  //   await dispatch(getEventsByUserId(user.id));
+  //   await dispatch(getAllEvents());
   const myRsvps = useSelector((state) => state.session.user.rsvps);
   return (
     
