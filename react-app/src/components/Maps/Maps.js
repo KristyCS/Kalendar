@@ -35,7 +35,7 @@ const Maps = ({ apiKey, event , GMapSetting}) => {
 									lat: event.lat,
 									lng: event.lng,
 								}}
-                icon
+                // icon
 								//  icon={{
 								// 	url: CustomMarker,
 								// 	scaledSize: new window.google.maps.Size(38, 26),
