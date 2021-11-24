@@ -12,8 +12,14 @@
   width: fit-content;
   height: fit-content;
   border-radius: 5px;
-  border: 1px, red, solid;
   display: flex;
   flex-direction: column;
   text-align: left;
+  text-decoration: none;
+  color:rgb(56, 113, 224);
+}
+
+.back:hover{
+  color:white;
+  background-color: rgb(56, 113, 224);
 }
