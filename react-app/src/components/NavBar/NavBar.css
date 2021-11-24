@@ -80,3 +80,8 @@
 .arrow:hover {
   background-color: rgb(219, 220, 224, 0.5);
 } 
+
+.demo-container{
+  display:flex;
+  flex-direction: row;
+}
