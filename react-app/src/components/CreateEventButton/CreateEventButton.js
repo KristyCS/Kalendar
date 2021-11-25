@@ -14,7 +14,7 @@ const CreateEventButton = () => {
         className="create-event-button"
       >
         <MdAddComment />
-        <p>Create</p>
+        <p>Create Event</p>
       </div>
       {showCreateEventModal && (
         <Modal onClose={() => setShowCreateEventModal(false)}>

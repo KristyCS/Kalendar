@@ -8,7 +8,9 @@ import EditRsvpForm from "../EditRsvpForm/EditRsvpForm";
 import { GrEdit } from "react-icons/gr";
 export default function SingleRsvp({ rsvp }) {
   const [showEventDetailModal, setShowEventDetailModal] = useState(false);
-  const event = useSelector((state) => state.event.allEvents[rsvp.event.id]);
+  // const event = useSelector((state) => state.event.allEvents[rsvp.event.id]);
+
+  const event =  JSON.parse(localStorage.getItem("allEvents"))[rsvp.event.id];
   const [showEditRsvpForm, setShowEditRsvpForm] = useState(false);
   return (
     <div className="single-rsvp-container">

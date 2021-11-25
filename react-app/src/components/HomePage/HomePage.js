@@ -73,6 +73,7 @@ const HomePage = () => {
       }
     }
     setMyEvents(newMyEvents);
+    localStorage.setItem("allEvents", JSON.stringify(allEvents))
   }, [allEvents, rsvpChange, eventsHostedByMe]);
   useEffect(() => {
     localStorage.setItem("showMyRsvps", showMyRsvps);
@@ -85,6 +86,7 @@ const HomePage = () => {
           <div className="switch-month">
             <div className="mini-board-month">
               {monthName[currentDate.month()]}
+              {"  "}
               {currentDate.year()}
             </div>
             <div className="mini-board-arrow">
@@ -105,13 +107,6 @@ const HomePage = () => {
           <MiniMonthBoard />
         </div>
         <MyCalendars />
-        {/* <div
-          className="my-rsvps-button"
-          onClick={() => setShowMyRsvps(!showMyRsvps)}
-        >
-          My RSVPs
-          <IoChevronForward />
-        </div> */}
         <NavLink className="my-rsvps-button" to="/myrsvps">
           My RSVPs
           <IoChevronForward />
@@ -122,8 +117,7 @@ const HomePage = () => {
         {!showMyRsvps && <MonthBoard eventsInThisPeriod={eventsInThisPeriod} />}
         {showMyRsvps && (
           <MyRsvpsList
-            showMyRsvps={showMyRsvps}
-            setShowMyRsvps={setShowMyRsvps}
+            allEvents={1}
           />
         )}
       </div>

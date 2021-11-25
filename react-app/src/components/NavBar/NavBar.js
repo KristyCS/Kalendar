@@ -12,13 +12,14 @@ import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 const dayjs = require("dayjs");
 const NavBar = () => {
-  const { showLeftNavigationBar, setShowLeftNavigationBar } = useLeftNavigationBarContext();
+  const { showLeftNavigationBar, setShowLeftNavigationBar } =
+    useLeftNavigationBarContext();
   const user = useSelector((state) => state.session.user);
   const { currentDate, setCurrentDate, setMiniBoardMarker } =
     useCurrentDateContext();
   const hideSideBarHandler = () => {
     setShowLeftNavigationBar(!showLeftNavigationBar);
-    localStorage.setItem("hideNav",!showLeftNavigationBar)
+    localStorage.setItem("hideNav", !showLeftNavigationBar);
   };
   return (
     <nav>
@@ -56,7 +57,8 @@ const NavBar = () => {
                 onClick={() => setCurrentDate(currentDate.add(1, "month"))}
               />
               <div>
-                {monthName[currentDate.month()]} {currentDate.year()}
+                {monthName[currentDate.month()]} {"  "}
+                {currentDate.year()}
               </div>
             </div>
             <LogoutButton />
@@ -68,12 +70,22 @@ const NavBar = () => {
               <LoginDemouser />
             </div>
             <div>
-              <NavLink to="/login" className="logout" exact={true} activeClassName="active">
+              <NavLink
+                to="/login"
+                className="logout"
+                exact={true}
+                activeClassName="active"
+              >
                 Login
               </NavLink>
             </div>
             <div>
-              <NavLink to="/sign-up" className="logout" exact={true} activeClassName="active">
+              <NavLink
+                to="/sign-up"
+                className="logout"
+                exact={true}
+                activeClassName="active"
+              >
                 Sign Up
               </NavLink>
             </div>{" "}

@@ -30,6 +30,7 @@
 }
 .large-head-content {
   text-align: center;
+  font-weight: 900;
 }
 .event-family{
   background-color:  rgb(226, 93, 51);
@@ -37,6 +38,8 @@
   width: 80%;
   color:white;
   padding:2px 10px;
+  font-weight: 900;
+  transition: 0.3s;
 }
 .event-work{
   background-color: rgb(123, 134, 198); 
@@ -44,6 +47,8 @@
   width: 80%;
   color:white;
   padding:2px 10px;
+  font-weight: 900;
+  transition: 0.3s;
 }
 .event-other{
   background-color:  rgb(66, 148, 136);
@@ -51,4 +56,22 @@
   width: 80%;
   color:white;
   padding:2px 10px;
+  font-weight: 900;
+  transition: 0.3s;
 }
+
+.event-work:hover{
+  cursor:pointer;
+  opacity: 0.7;
+}
+
+.event-other:hover{
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.event-family:hover{
+  cursor:pointer;
+  opacity: 0.7;
+}
+

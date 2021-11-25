@@ -81,95 +81,119 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
             <div key={ind}>{error}</div>
           ))}
         </div>
-        <div className="theme-container">
-          <input
-            className="theme"
-            onChange={(e) => {
-              setTheme(e.target.value);
-            }}
-            placeholder="Add Theme"
-            required
-          ></input>
-        </div>
-        <div className="select-label">
-          <Select onChange={setLabel} options={labelOptions} />
-        </div>
-        <div className="start-date">
-          <DatePicker
-            dateFormat="MM/dd/yy"
-            selected={startDate}
-            onChange={(date) => {
-              setStartDate(date);
-              setCurrentDate(dayjs(date));
-            }}
-          />
-        </div>
-        <div className="start-time">
-          <TimePicker
-            closeClock={false}
-            selected={startTime}
-            value={startTime}
-            onChange={(value) => {
-              setStartTime(value);
-            }}
-          />
-        </div>
-        <div className="end-date">
-          <DatePicker
-            dateFormat="MM/dd/yy"
-            selected={endDate}
-            onChange={(date) => {
-              setEndDate(date);
-            }}
-          />
-        </div>
-        <div className="end-time">
-          <TimePicker
-            selected={endTime}
-            value={endTime}
-            onChange={(time) => {
-              setEndTime(time);
-            }}
-          />
-        </div>
-        <div className="participants">
-          <Select isMulti onChange={setParticipants} options={options} />
-        </div>
-        <div className="city">
-          <input
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-            placeholder="city"
-            required
-          />
-        </div>
-        <div className="state">
-          <input
-            value={state}
-            onChange={(e) => setState(e.target.value)}
-            placeholder="state"
-            required
-          />
-        </div>
-        <div className="description">
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="description"
-            row={15}
-            column={20}
-          />
-        </div>
-        <div className="poster">
-          <input
-            type="file"
-            onChange={(e) => {
-              setPosterFile(e.target.files[0]);
-            }}
-            accept="image/*"
-            multiple={true}
-          />
-        </div>
+        <table >
+          <tbody >
+            <tr className="create-tr">
+              <td className="create-column">Event theme:</td>
+              <td>
+                <input
+                  className="theme"
+                  onChange={(e) => {
+                    setTheme(e.target.value);
+                  }}
+                  placeholder="Add Theme"
+                  required
+                ></input>
+              </td>
+            </tr>
+            <tr className="create-tr">
+              <td className="create-column">Event label:</td>
+              <td>
+                <Select onChange={setLabel} options={labelOptions} />
+              </td>
+            </tr>
+            <tr className="create-tr">
+              <td className="create-column">Start date:</td>
+              <td>
+                <DatePicker
+                  dateFormat="MM/dd/yy"
+                  selected={startDate}
+                  onChange={(date) => {
+                    setStartDate(date);
+                    setCurrentDate(dayjs(date));
+                  }}
+                />
+              </td>
+            </tr>
+            <tr className="create-tr"> 
+              <td className="create-column">End date:</td>
+              <td>
+                <DatePicker
+                  dateFormat="MM/dd/yy"
+                  selected={endDate}
+                  onChange={(date) => {
+                    setEndDate(date);
+                  }}
+                />
+              </td>
+            </tr>
+            <tr className="create-tr">
+              <td className="create-column">Start time:</td>
+              <td>
+                <TimePicker
+                  closeClock={false}
+                  selected={startTime}
+                  value={startTime}
+                  onChange={(value) => {
+                    setStartTime(value);
+                  }}
+                />
+              </td>
+            </tr>
+            <tr className="create-tr">
+              <td className="create-column">End time:</td>
+              <td>
+                <TimePicker
+                  selected={endTime}
+                  value={endTime}
+                  onChange={(time) => {
+                    setEndTime(time);
+                  }}
+                />
+              </td>
+            </tr>
+            <tr className="create-tr">
+              <td className="create-column">Participants:</td>
+              <td>
+                <Select isMulti onChange={setParticipants} options={options} />
+              </td>
+            </tr>
+            <tr className="create-tr">
+              <td className="create-column">City:</td>
+              <td>
+                <input
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                  placeholder="city"
+                  required
+                />
+              </td>
+            </tr>
+            <tr className="create-tr">
+              <td className="create-column">State:</td>
+              <td>
+                <input
+                  value={state}
+                  onChange={(e) => setState(e.target.value)}
+                  placeholder="state"
+                  required
+                />
+              </td>
+            </tr>
+            <tr className="create-tr">
+              <td className="create-column">Description:</td>
+              <td>
+                <textarea
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder="description"
+                  row={15}
+                  column={20}
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
         <button type="submit">Save</button>
       </form>
     </div>

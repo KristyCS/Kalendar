@@ -5,34 +5,46 @@
   align-items: center;
   border-bottom: solid rgb(219, 220, 224) 1px;
 }
-.date-nav-container{
-  display:flex;
+.date-nav-container {
+  display: flex;
   flex-direction: row;
 }
-.h-container{
-  display:flex;
+.h-container {
+  display: flex;
   align-items: center;
-  gap:15px;
+  gap: 15px;
 }
-.Kalendar{
+.Kalendar {
   text-decoration: none;
   font-size: 35px;
-  background-image: linear-gradient(to right, violet, indigo, blue, green, yellow, orange, red);   -webkit-background-clip: text;
+  background-image: linear-gradient(
+    to right,
+    violet,
+    indigo,
+    blue,
+    green,
+    yellow,
+    orange,
+    red
+  );
+  -webkit-background-clip: text;
   color: transparent;
 }
-.today{
-  border: solid rgb(219, 220, 224) 1px;
+.today {
+  border: solid rgb(56,113,224) 2px;
   border-radius: 5px;
   padding: 5px 15px;
-  transition:0.3s;
+  transition: 0.3s;
+  font-size: larger;
 }
 .today:hover {
-  background-color: rgb(219, 220, 224, 0.7);
-  opacity: 0.7;
+  background-color: rgb(56,113,224);
+  color:white;
+  cursor: pointer;
 }
 
-.logout{
-  background-color: rgb(56,113,224);
+.logout {
+  background-color: rgb(56, 113, 224);
   border: none;
   color: white;
   padding: 10px 25px;
@@ -43,23 +55,30 @@
   border-radius: 5px;
   transition: 0.3s;
 }
-.logout:hover{
+.logout:hover {
   opacity: 0.7;
+  cursor:pointer;
 }
- 
-.hamber-icon{
+
+.hamber-icon {
   border-radius: 50%;
   padding: 8px 8px;
   background-color: rgb(219, 220, 224, 0.5);
 }
 
-.auth{
-  display: flex;
-  flex-direction: row;
-  gap:10px;
-  align-items: center;
+.hamber-icon:hover {
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 8px 8px;
+  background-color: rgba(219, 220, 224);
 }
 
+.auth {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
 
 .date-nav-container {
   display: flex;
@@ -71,12 +90,21 @@
   border-radius: 50%;
   padding: 4px 4px;
   transition: 0.3s;
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
   width: 20px;
-  height:20px;
+  height: 20px;
 }
 .arrow:hover {
   background-color: rgb(219, 220, 224, 0.5);
-} 
+}
+
+.demo-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.date-nav-container div{
+  font-weight: 900;
+}
