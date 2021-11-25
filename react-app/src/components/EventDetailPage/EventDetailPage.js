@@ -5,10 +5,8 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import { GrEdit } from "react-icons/gr";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { Modal } from "../../context/Modal";
 import MapContainer from "../Maps";
 import { deleteEvent } from "../../store/event";
-import EditEventForm from "../EditEventForm/EditEventForm";
 import { dayjs, dayName, monthName } from "../../utils";
 const customParseFormat = require("dayjs/plugin/customParseFormat");
 dayjs.extend(customParseFormat);
@@ -50,34 +48,68 @@ const EventDetailPage = ({
   return (
     <div className="event-container">
       <div className="event-info">
-        <p className="theme">
-          {event.theme}
-          {event.host.id === user.id && (
-            <>
-              <GrEdit
-                onClick={() => {
-                  setShowEditEventModal(true);
-                  setShowEventDetailModal(false);
-                }}
-              />
-              <RiDeleteBin5Line onClick={deleteEventHandler} />
-            </>
-          )}
-        </p>
-        <p className="date-detail">
-          {dayName[startTimeUtc.day()] +
-            "," +
-            monthName[startTimeUtc.month()] +
-            " " +
-            startTimeUtc.date()}
-        </p>
-        <p className="time">
-          {startHour + ":" + startMin + " - " + endHour + ":" + endMin}
-        </p>
-        <p className="city">{event.city}</p>
-        <p className="state">{event.state}</p>
-        <p className="host">{event.host.username}</p>
-        <p className="description">{event.description}</p>
+        <div className="theme-container">
+          <p>Theme: </p>
+          <p>
+            {event.theme}
+            {"   "}
+            {event.host.id === user.id && (
+              <>
+                <GrEdit
+                  className="detailIcon"
+                  onClick={() => {
+                    setShowEditEventModal(true);
+                    setShowEventDetailModal(false);
+                  }}
+                />
+                <RiDeleteBin5Line
+                  className="detailIcon"
+                  onClick={deleteEventHandler}
+                />
+              </>
+            )}
+          </p>
+        </div>
+        <div className="detail-container">
+          <p className="detail">On:</p>
+          <p className="date-detail">
+            {dayName[startTimeUtc.day()] +
+              "," +
+              monthName[startTimeUtc.month()] +
+              " " +
+              startTimeUtc.date()}
+          </p>
+        </div>
+        <div className="detail-container">
+          <p className="detail">From</p>
+          {startHour + ":" + startMin}
+          <p className="detail">To</p>
+          {endHour + ":" + endMin}
+        </div>
+        <div className="detail-container">
+          <p className="detail">City: </p>
+          <p>{event.city}</p>
+        </div>
+        <div className="detail-container">
+          <p className="detail">State: </p>
+          <p>{event.state}</p>
+        </div>
+        <div className="detail-container">
+          <p className="detail">Hosted by: </p>
+          <p className="">{event.host.username}</p>
+        </div>
+        {event.rsvps && (
+          <div className="detail-container">
+            <p className="detail">Participants: </p>
+            {event.rsvps.map((rsvp)=><p>{rsvp.user.username}</p>)}
+          </div>
+        )}
+        {event.description && (
+          <div className="description-container">
+            <p className="detail">Description: </p>
+            {event.description}
+          </div>
+        )}
       </div>
       <div className="map">
         <MapContainer event={event} GMapSetting={GMapSetting} />
