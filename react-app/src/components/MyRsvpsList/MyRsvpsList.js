@@ -12,6 +12,7 @@ export default function MyRsvpsList() {
         {myRsvps.map((rsvp, idx) => (
           <SingleRsvp key={idx} rsvp={rsvp} />
         ))}
+        { !myRsvps.length && (<div>You have no rsvp now.</div>)}
       </div>
     
   );

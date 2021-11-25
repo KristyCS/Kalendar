@@ -5,7 +5,6 @@ import { useEventLabelContext } from "../../context/EventLabel";
 import { useLeftNavigationBarContext } from "../../context/LeftNavigationBar";
 import { IoChevronUp } from "react-icons/io5";
 export default function MyCalendars() {
-  const { selectedLabels, setSelectedLabels } = useLeftNavigationBarContext();
   const {
     checkFamily,
     setCheckFamily,

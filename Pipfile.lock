@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "ecabae825a073f302d156fbcf46f204cc8526b7e34c025359a995cc93d2b33f1"
+            "sha256": "81bd35d8dc1c4ee2e158e4ddf32407cec051c59bad9b24662cab89927c33d1e6"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -26,19 +26,19 @@
         },
         "boto3": {
             "hashes": [
-                "sha256:81ebdcabc534a52e2b7a2bfcbe1a1d7f1e34f028f7fe1cb16ccd80e34cea867a",
-                "sha256:c0ac23cc36dc484edd1edd28903b5712cb07507af1ae19b2e8d6db176416d9e2"
+                "sha256:224a380a3a825beaf7aa54119e7469884c6adb9098cbf3d64bd487ac6c564d57",
+                "sha256:df9c74f3dd35e1147e0e873984384e00b0db8c3f6552d8e0b7f50e7b8177f537"
             ],
             "index": "pypi",
-            "version": "==1.20.8"
+            "version": "==1.20.12"
         },
         "botocore": {
             "hashes": [
-                "sha256:a0c7cfea155a0202ab197a016736dd4e6a26f9e416bdd9cdd2c9a3fb88ffa5a8",
-                "sha256:ae4ed9666199020a9e53c3d3efc0a7d417315cd2313b70cb013282afe70ac358"
+                "sha256:002f96a07503c83c1d110174506e68a8fbcb4765b7eafa5f66ef59d910912d17",
+                "sha256:3047ddf3ee3e54d58b896b442d3044eab30e6bfac2a2fbac428e5c12d8670a3d"
             ],
             "markers": "python_version >= '3.6'",
-            "version": "==1.23.8"
+            "version": "==1.23.12"
         },
         "certifi": {
             "hashes": [
@@ -63,13 +63,29 @@
             "index": "pypi",
             "version": "==7.1.2"
         },
-        "faker": {
+        "dnspython": {
             "hashes": [
-                "sha256:393bd1b5becf3ccbc04a4f0f13da7e437914b24cafd1a4d8b71b5fecff54fb34",
-                "sha256:876ba213aaddd661a539ada2158917c1be17064b72792ee788b81c13528865d0"
+                "sha256:95d12f6ef0317118d2a1a6fc49aac65ffec7eb8087474158f42f26a639135216",
+                "sha256:e4a87f0b573201a0f3727fa18a516b055fd1107e0e5477cded4a2de497df1dd4"
+            ],
+            "markers": "python_version >= '3.6'",
+            "version": "==2.1.0"
+        },
+        "email-validator": {
+            "hashes": [
+                "sha256:5675c8ceb7106a37e40e2698a57c056756bf3f272cfa8682a4f87ebd95d8440b",
+                "sha256:aa237a65f6f4da067119b7df3f13e89c25c051327b2b5b66dc075f33d62480d7"
             ],
             "index": "pypi",
-            "version": "==9.8.2"
+            "version": "==1.1.3"
+        },
+        "faker": {
+            "hashes": [
+                "sha256:3c997b505627e63eb54e7ec268d0669bc5b6b98c1822f632d2784d91664d5f11",
+                "sha256:76ad74cebe727affa1c108e17fc1d2c0be8f498ff71b25f464fb8241301fe6f2"
+            ],
+            "index": "pypi",
+            "version": "==9.8.3"
         },
         "flask": {
             "hashes": [

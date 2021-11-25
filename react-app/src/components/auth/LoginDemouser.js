@@ -4,13 +4,20 @@ import { login } from "../../store/session";
 
 const LoginDemouser = () => {
   const dispatch = useDispatch();
-  const loginDemo = async () => {
+  const loginDemo1 = async () => {
     await dispatch(login("demo@aa.io", "password"));
   };
+  const loginDemo2 = async () => {
+    await dispatch(login("zhang@aa.io", "password"));
+  };
   return (
-    <div className="logout" onClick={loginDemo}>
-      Demo User
+    <div className="demo-container">
+    <div className="logout" onClick={loginDemo1}>
+      Demo User 1
     </div>
+    <div className="logout" onClick={loginDemo2}>
+    Demo User 2
+  </div></div>
   );
 };
 
