@@ -73,6 +73,7 @@ const HomePage = () => {
       }
     }
     setMyEvents(newMyEvents);
+    localStorage.setItem("allEvents", JSON.stringify(allEvents))
   }, [allEvents, rsvpChange, eventsHostedByMe]);
   useEffect(() => {
     localStorage.setItem("showMyRsvps", showMyRsvps);
@@ -116,8 +117,7 @@ const HomePage = () => {
         {!showMyRsvps && <MonthBoard eventsInThisPeriod={eventsInThisPeriod} />}
         {showMyRsvps && (
           <MyRsvpsList
-            showMyRsvps={showMyRsvps}
-            setShowMyRsvps={setShowMyRsvps}
+            allEvents={1}
           />
         )}
       </div>

@@ -192,10 +192,6 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
                 />
               </td>
             </tr>
-            <tr className="create-tr">
-              <td className="create-column"></td>
-              <td></td>
-            </tr>
           </tbody>
         </table>
         <button type="submit">Save</button>

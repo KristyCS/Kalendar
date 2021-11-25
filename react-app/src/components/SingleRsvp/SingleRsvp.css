@@ -3,16 +3,11 @@
     width:70%;
     height:fit-content;
     border-radius: 5px;
-    border: 1px, red, solid;
     display: flex;
     flex-direction: column;
     background-color: rgb(250, 246, 246);
 }
-.event-poster{
-    background-color: aqua;
-    /* max-width: 100%;
-    max-height: 100%; */
-}
+
 
 .single-rsvp-info{
   display: flex;
@@ -31,4 +26,8 @@
 
 .column-pointer{
     cursor: pointer;
+}
+
+.column-pointer:hover{
+    font-weight: 900;
 }

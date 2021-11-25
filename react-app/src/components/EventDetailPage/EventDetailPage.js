@@ -101,7 +101,7 @@ const EventDetailPage = ({
         {event.rsvps && (
           <div className="detail-container">
             <p className="detail">Participants: </p>
-            {event.rsvps.map((rsvp)=><p>{rsvp.user.username}</p>)}
+            {event.rsvps.map((rsvp,idx)=><p key={idx}>{rsvp.user.username}</p>)}
           </div>
         )}
         {event.description && (

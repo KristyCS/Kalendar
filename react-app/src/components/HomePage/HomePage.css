@@ -23,14 +23,6 @@
     cursor: pointer;
     text-decoration: none;
     color: black;
-  /* display: flex;
-  flex-direction: row;
-  padding: 4px;
-  justify-content: flex-start;
-  gap: 30px;
-  border-radius: 5px;
-  transform: 0.3s;
-  align-items: center; */
 }
 .my-rsvps-button:hover {
   background-color: rgb(239, 240, 243);
