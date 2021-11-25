@@ -22,6 +22,7 @@
 
 .col-name{
     padding-right: 4px;
+    font-weight: 900;
 }
 
 .column-pointer{
@@ -30,4 +31,7 @@
 
 .column-pointer:hover{
     font-weight: 900;
+}
+.rsvp-icon{
+    cursor: pointer;
 }
