@@ -51,3 +51,28 @@ textarea {
   background: rgba(255, 255, 255, 0.5);
   margin: 0 0 10px 0;
 }
+
+.error{
+  color:red;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-weight: 400;
+}
+.create{
+	border-radius: 5px;
+  color: white;
+	border: none;
+	display: inline-block;
+	text-decoration: none;
+	padding: 10px;
+	transition: all 0.4s ease 0s;
+	background:  rgb(0, 123, 255);
+	text-transform: uppercase;
+  width:40%;
+  margin-left: 30%;
+}
+
+.create:hover {
+	box-shadow: 3px 20px -8px rgba(0, 0, 0, 0.342);
+	letter-spacing: 1px;
+	background: #00000044;
+}
