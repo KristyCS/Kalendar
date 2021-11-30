@@ -7,10 +7,11 @@
   background-image: linear-gradient(to bottom, white, rgba(0, 0, 0, 0.192));
 }
 .following-container {
-  height: 400px;
+  height: fit-content;
   display: grid;
   grid-template-columns: 1fr 1fr;
   background-image: linear-gradient(to bottom, white, rgba(0, 0, 0, 0.192));
+  padding:30px 40px;
 }
 
 .login-form-container {
