@@ -89,7 +89,7 @@ export default function EditEventForm({ setShowEditEventModal, event }) {
         startTime,
         ":00"
       ),
-      end_at: "".concat(dayjs(endDate).format("MM/DD/YY"), " ", endTime, ":00"),
+      end_at: "".concat(dayjs(startDate).format("MM/DD/YY"), " ", endTime, ":00"),
     };
     const data = await dispatch(editEvent(newEvent));
     if (data) {
@@ -134,7 +134,7 @@ export default function EditEventForm({ setShowEditEventModal, event }) {
               </td>
             </tr>
             <tr className="create-tr">
-              <td className="create-column">Start date:</td>
+              <td className="create-column">Date:</td>
               <td>
                 <DatePicker
                   selected={startDate}
@@ -145,7 +145,7 @@ export default function EditEventForm({ setShowEditEventModal, event }) {
                 />
               </td>
             </tr>
-            <tr className="create-tr">
+            {/* <tr className="create-tr">
               <td className="create-column">End date:</td>
               <td>
                 <DatePicker
@@ -155,7 +155,7 @@ export default function EditEventForm({ setShowEditEventModal, event }) {
                   }}
                 />
               </td>
-            </tr>
+            </tr> */}
             <tr className="create-tr">
               <td className="create-column">Start time:</td>
               <td>
