@@ -26,7 +26,7 @@ export default function SingleRsvp({ rsvp }) {
             </tr>
             {rsvp.status === "no rsp" && (
               <tr onClick={() => setShowEditRsvpForm(true)}>
-                {!showEditRsvpForm && <td>Waiting for your reply...</td>}
+                {!showEditRsvpForm && <td className="no-reply">Waiting for your reply...</td>}
                 {showEditRsvpForm && (
                   <>
                     <td className="col-name short-column">Replied: </td>

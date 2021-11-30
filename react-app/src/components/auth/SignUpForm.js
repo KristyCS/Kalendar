@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { signUp } from "../../store/session";
-
+import "./auth.css"
 const SignUpForm = () => {
   const [errors, setErrors] = useState([]);
   const [username, setUsername] = useState("");
@@ -43,7 +43,8 @@ const SignUpForm = () => {
   }
 
   return (
-    <form onSubmit={onSignUp}>
+  <div className="sing-up-container">
+    <form className="sign-up-form-container" onSubmit={onSignUp}>
       <div>
         {errors.map((error, ind) => (
           <div key={ind}>{error}</div>
@@ -54,6 +55,7 @@ const SignUpForm = () => {
         <input
           type="text"
           name="username"
+          placeholder="username"
           onChange={updateUsername}
           value={username}
         ></input>
@@ -63,6 +65,7 @@ const SignUpForm = () => {
         <input
           type="text"
           name="email"
+          placeholder="email"
           onChange={updateEmail}
           value={email}
         ></input>
@@ -72,6 +75,7 @@ const SignUpForm = () => {
         <input
           type="password"
           name="password"
+          placeholder="password"
           onChange={updatePassword}
           value={password}
         ></input>
@@ -81,13 +85,14 @@ const SignUpForm = () => {
         <input
           type="password"
           name="repeat_password"
+          placeholder="password"
           onChange={updateRepeatPassword}
           value={repeatPassword}
           required={true}
         ></input>
       </div>
       <button type="submit">Sign Up</button>
-    </form>
+    </form></div>
   );
 };
 
