@@ -78,7 +78,7 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
       <form className="create-event-form" onSubmit={createEventHandler}>
         <div>
           {errors.map((error, ind) => (
-            <div key={ind}>{error}</div>
+            <div className="error" key={ind}>{error}</div>
           ))}
         </div>
         <table >
@@ -115,18 +115,6 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
                 />
               </td>
             </tr>
-            {/* <tr className="create-tr"> 
-              <td className="create-column">End date:</td>
-              <td>
-                <DatePicker
-                  dateFormat="MM/dd/yy"
-                  selected={endDate}
-                  onChange={(date) => {
-                    setEndDate(date);
-                  }}
-                />
-              </td>
-            </tr> */}
             <tr className="create-tr">
               <td className="create-column">Start time:</td>
               <td>
@@ -194,7 +182,7 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
             </tr>
           </tbody>
         </table>
-        <button type="submit">Save</button>
+        <button className="create" type="submit">Save</button>
       </form>
     </div>
   );
