@@ -8,7 +8,17 @@
     background-color: rgb(250, 246, 246);
 }
 
-
+.no-reply{
+    cursor: pointer;
+    color:red;
+    transition: 0.3s;
+}
+.no-reply:hover{
+    font-weight: 900;
+    color: white; background: red;
+    border-radius: 5px;
+    padding: 1px;
+}
 .single-rsvp-info{
   display: flex;
   flex-direction: row;
@@ -22,6 +32,7 @@
 
 .col-name{
     padding-right: 4px;
+    font-weight: 900;
 }
 
 .column-pointer{
@@ -30,4 +41,7 @@
 
 .column-pointer:hover{
     font-weight: 900;
+}
+.rsvp-icon{
+    cursor: pointer;
 }
