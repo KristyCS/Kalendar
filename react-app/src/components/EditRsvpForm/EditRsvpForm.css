@@ -3,3 +3,11 @@
   flex-direction: row;
   gap: 2px;
 }
+
+.table-edit-rsvp-cell input, button, label{
+
+  cursor: pointer;
+}
+.table-edit-rsvp-cell label:hover{
+font-weight: 900;
+}

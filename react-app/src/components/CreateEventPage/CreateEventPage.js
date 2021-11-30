@@ -64,7 +64,7 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
         startTime,
         ":00"
       ),
-      end_at: "".concat(dayjs(endDate).format("MM/DD/YY"), " ", endTime, ":00"),
+      end_at: "".concat(dayjs(startDate).format("MM/DD/YY"), " ", endTime, ":00"),
     };
     const data = await dispatch(createEvent(newEvent));
     if (data) {
@@ -103,7 +103,7 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
               </td>
             </tr>
             <tr className="create-tr">
-              <td className="create-column">Start date:</td>
+              <td className="create-column">Date:</td>
               <td>
                 <DatePicker
                   dateFormat="MM/dd/yy"
@@ -115,7 +115,7 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
                 />
               </td>
             </tr>
-            <tr className="create-tr"> 
+            {/* <tr className="create-tr"> 
               <td className="create-column">End date:</td>
               <td>
                 <DatePicker
@@ -126,7 +126,7 @@ const CreateEventPage = ({ setShowCreateEventModal }) => {
                   }}
                 />
               </td>
-            </tr>
+            </tr> */}
             <tr className="create-tr">
               <td className="create-column">Start time:</td>
               <td>

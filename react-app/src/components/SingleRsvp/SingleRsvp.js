@@ -8,8 +8,6 @@ import EditRsvpForm from "../EditRsvpForm/EditRsvpForm";
 import { GrEdit } from "react-icons/gr";
 export default function SingleRsvp({ rsvp }) {
   const [showEventDetailModal, setShowEventDetailModal] = useState(false);
-  // const event = useSelector((state) => state.event.allEvents[rsvp.event.id]);
-
   const event =  JSON.parse(localStorage.getItem("allEvents"))[rsvp.event.id];
   const [showEditRsvpForm, setShowEditRsvpForm] = useState(false);
   return (
@@ -28,7 +26,7 @@ export default function SingleRsvp({ rsvp }) {
             </tr>
             {rsvp.status === "no rsp" && (
               <tr onClick={() => setShowEditRsvpForm(true)}>
-                {!showEditRsvpForm && <td>Waiting for your reply...</td>}
+                {!showEditRsvpForm && <td className="no-reply">Waiting for your reply...</td>}
                 {showEditRsvpForm && (
                   <>
                     <td className="col-name short-column">Replied: </td>
@@ -51,7 +49,7 @@ export default function SingleRsvp({ rsvp }) {
                       {rsvp.status}{" "}
                       <GrEdit
                         onClick={() => setShowEditRsvpForm(true)}
-                        className="column-pointer"
+                        className="rsvp-icon"
                       />
                     </td>
                   )}
@@ -63,10 +61,6 @@ export default function SingleRsvp({ rsvp }) {
                       />
                     </td>
                   )}
-                </tr>
-                <tr>
-                  <td className="col-name short-column">On: </td>
-                  <td>{dayjs(rsvp.updated_at).date()}</td>
                 </tr>
               </>
             )}
