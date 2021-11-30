@@ -4,3 +4,28 @@
     margin-top: 20px;
     margin-bottom: 20px;
 }
+
+.error{
+    color:red;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 400;
+  }
+
+.update{
+	border-radius: 5px;
+    color: white;
+	border: none;
+	display: inline-block;
+	text-decoration: none;
+	padding: 10px;
+	transition: all 0.4s ease 0s;
+	background:  rgb(0, 123, 255);
+	text-transform: uppercase;
+	margin-left: 35%;
+}
+
+.update:hover {
+	box-shadow: 3px 20px -8px rgba(0, 0, 0, 0.342);
+	letter-spacing: 1px;
+	background: #00000044;
+}

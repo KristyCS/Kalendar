@@ -79,7 +79,7 @@ const NavBar = () => {
                 Login
               </NavLink>
             </div>
-            <div>
+            {/* <div>
               <NavLink
                 to="/sign-up"
                 className="logout"
@@ -88,7 +88,7 @@ const NavBar = () => {
               >
                 Sign Up
               </NavLink>
-            </div>{" "}
+            </div>{" "} */}
           </div>
         )}
       </div>

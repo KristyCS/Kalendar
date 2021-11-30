@@ -104,7 +104,7 @@ export default function EditEventForm({ setShowEditEventModal, event }) {
       <form className="edit-event-form" onSubmit={editEventHandler}>
         <div>
           {errors.map((error, ind) => (
-            <div key={ind}>{error}</div>
+            <div className="error" key={ind}>{error}</div>
           ))}
         </div>
         <table>
@@ -145,17 +145,6 @@ export default function EditEventForm({ setShowEditEventModal, event }) {
                 />
               </td>
             </tr>
-            {/* <tr className="create-tr">
-              <td className="create-column">End date:</td>
-              <td>
-                <DatePicker
-                  selected={endDate}
-                  onChange={(date) => {
-                    setEndDate(date);
-                  }}
-                />
-              </td>
-            </tr> */}
             <tr className="create-tr">
               <td className="create-column">Start time:</td>
               <td>
@@ -229,7 +218,7 @@ export default function EditEventForm({ setShowEditEventModal, event }) {
             </tr>
           </tbody>
         </table>
-        <button type="submit">Update</button>
+        <button className="update" type="submit">Update</button>
       </form>
     </div>
   );
