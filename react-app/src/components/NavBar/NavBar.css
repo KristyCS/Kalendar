@@ -1,8 +1,13 @@
 .nav-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  margin-left: 20px;
+  margin-right:20px;
+  justify-content: space-between;
   align-items: center;
+  
+}
+.line-container{
   border-bottom: solid rgb(219, 220, 224) 1px;
 }
 .date-nav-container {
