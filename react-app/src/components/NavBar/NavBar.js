@@ -79,19 +79,10 @@ const NavBar = () => {
                 Login
               </NavLink>
             </div>
-            {/* <div>
-              <NavLink
-                to="/sign-up"
-                className="logout"
-                exact={true}
-                activeClassName="active"
-              >
-                Sign Up
-              </NavLink>
-            </div>{" "} */}
           </div>
         )}
       </div>
+      <div className="line-container"></div>
     </nav>
   );
 };
